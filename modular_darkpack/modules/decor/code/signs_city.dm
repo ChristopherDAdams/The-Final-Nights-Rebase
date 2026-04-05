@@ -127,6 +127,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/city/strip_club, 32)
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/city/cabaret_sign, 32)
 
 /obj/structure/sign/city/cabaret_sign/Initialize(mapload)
