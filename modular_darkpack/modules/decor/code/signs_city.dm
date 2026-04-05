@@ -119,6 +119,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/city/strip_club, 32)
 	. = ..()
 	set_light(3, 2, "#8e509e")
 
+/obj/structure/sign/city/crown_blue
+	name = "Crown Blue Sign"
+	desc = "It says CB, and it has a crown and saxaphone in Neon... Fancy."
+	icon = 'modular_darkpack/modules/deprecated/icons/48x48.dmi'
+	icon_state = "crownblue"
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	pixel_w = -8
+	//pixel_z = 32
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/city/crown_blue, 32)
+
+/obj/structure/sign/city/crown_blue/Initialize(mapload)
+	. = ..()
+	set_light(3, 2, "#505e9e")
+
 /obj/structure/sign/city/cabaret_sign
 	name = "cabaret"
 	desc = "An enticing pair of legs... I wonder what's inside?"
