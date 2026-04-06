@@ -7012,11 +7012,13 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
 "bLo" = (
-/obj/effect/turf_decal/siding/wood/light{
-	dir = 6
+/obj/machinery/button/door{
+	id = 435;
+	name = "Parking Shutters Control";
+	pixel_x = -8
 	},
-/obj/structure/chair/stool/bar/darkpack/blue,
-/turf/open/floor/wood/ornate,
+/obj/structure/table,
+/turf/open/floor/plating/asphalt,
 /area/vtm/interior/jazzclub)
 "bLt" = (
 /obj/effect/turf_decal/siding/wood/dark{
@@ -11355,9 +11357,6 @@
 /obj/structure/platform/lowwall/rich/old/window,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/endron_facility)
-"cRj" = (
-/turf/open/floor/plating/asphalt,
-/area/vtm/interior/jazzclub)
 "cRr" = (
 /obj/effect/turf_decal/siding/grey{
 	dir = 1
@@ -14102,6 +14101,13 @@
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
+"dCY" = (
+/obj/machinery/light/prince/directional/north,
+/obj/effect/turf_decal/asphaltline/alt{
+	dir = 8
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/outside/financialdistrict)
 "dDd" = (
 /obj/effect/turf_decal/bordur{
 	dir = 1
@@ -16232,6 +16238,13 @@
 "efN" = (
 /turf/open/misc/grass,
 /area/vtm/outside/pacificheights/forest)
+"efO" = (
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 6
+	},
+/obj/structure/chair/stool/bar/darkpack/blue,
+/turf/open/floor/wood/ornate,
+/area/vtm/interior/jazzclub)
 "efT" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/item/food/grown/trumpet,
@@ -20640,12 +20653,15 @@
 /turf/open/floor/city/factory,
 /area/vtm/interior/giovanni)
 "fmc" = (
-/obj/machinery/door/poddoor/shutters{
-	damage_deflection = 60;
-	id = 435;
-	max_integrity = 300;
-	name = "Parking Shutter";
-	dir = 8
+/obj/effect/mapping_helpers/door/access/jazz_club,
+/obj/effect/mapping_helpers/door/autoname,
+/obj/effect/mapping_helpers/door/lock_difficulty/six,
+/obj/effect/mapping_helpers/door/lock,
+/obj/structure/vampdoor/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/grey{
+	dir = 4
 	},
 /turf/open/floor/plating/asphalt,
 /area/vtm/interior/jazzclub)
@@ -20667,8 +20683,8 @@
 /obj/effect/mapping_helpers/door/autoname,
 /obj/effect/mapping_helpers/door/unlock,
 /obj/effect/mapping_helpers/door/lock_difficulty/six,
-/obj/effect/turf_decal/siding/wood/dark,
 /obj/structure/vampdoor/wood,
+/obj/effect/turf_decal/siding/grey,
 /turf/open/floor/plating/asphalt,
 /area/vtm/interior/jazzclub)
 "fmu" = (
@@ -27210,6 +27226,16 @@
 /obj/structure/hedge,
 /turf/open/floor/wood/smooth/old,
 /area/vtm/interior/setite)
+"gXm" = (
+/obj/machinery/door/poddoor/shutters{
+	damage_deflection = 60;
+	id = 435;
+	max_integrity = 300;
+	name = "Parking Shutter";
+	dir = 8
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/outside/financialdistrict)
 "gXr" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -40112,10 +40138,9 @@
 /turf/open/floor/carpet/green,
 /area/vtm/interior)
 "klK" = (
-/obj/effect/turf_decal/siding/wood/light,
-/obj/structure/table/wood/poker,
-/turf/open/floor/wood/smooth,
-/area/vtm/interior/jazzclub)
+/obj/effect/decal/wallpaper/blue,
+/turf/closed/wall/vampwall/rich,
+/area/vtm/outside/financialdistrict)
 "klN" = (
 /obj/structure/chair/wood/darkpack{
 	dir = 1
@@ -49069,6 +49094,20 @@
 	},
 /turf/open/floor/wood/ornate,
 /area/vtm/interior/millennium_tower/f3)
+"myX" = (
+/obj/structure/hedge{
+	pixel_y = 6
+	},
+/obj/structure/flora/bush/sparsegrass/style_random{
+	icon_state = "ywflowers_4"
+	},
+/obj/structure/flora/bush/sparsegrass/style_random{
+	icon_state = "lavendergrass_3"
+	},
+/obj/structure/platform/lowwall/rich,
+/obj/structure/railing/wooden_fence,
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "mzc" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/bordur/corner{
@@ -49789,9 +49828,10 @@
 /turf/open/floor/city/bacotell,
 /area/vtm/interior/giovanni)
 "mIV" = (
-/obj/darkpack_car/limousine/camarilla,
-/turf/open/floor/plating/asphalt,
-/area/vtm/outside/financialdistrict)
+/obj/effect/turf_decal/siding/wood/light,
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "mIW" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/white{
@@ -54826,16 +54866,6 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/misc/grass/nosmooth,
 /area/vtm/outside/pacificheights)
-"nVo" = (
-/obj/machinery/door/poddoor/shutters{
-	damage_deflection = 60;
-	id = 435;
-	max_integrity = 300;
-	name = "Parking Shutter";
-	dir = 8
-	},
-/turf/open/floor/plating/asphalt,
-/area/vtm/outside/financialdistrict)
 "nVv" = (
 /obj/effect/decal/support,
 /turf/open/water/beach/vamp/deep,
@@ -62795,6 +62825,9 @@
 /obj/effect/mapping_helpers/door/lock_difficulty/four,
 /turf/open/floor/city/toilet,
 /area/vtm/interior)
+"pSk" = (
+/turf/open/floor/plating/asphalt,
+/area/vtm/interior/jazzclub)
 "pSl" = (
 /obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /obj/item/storage/box/ingredients/random,
@@ -63391,14 +63424,9 @@
 /turf/open/floor/carpet,
 /area/vtm/interior/chantry/basement)
 "pZS" = (
-/obj/machinery/button/door{
-	id = 435;
-	name = "Parking Shutters Control";
-	pixel_x = -8
-	},
-/obj/structure/table,
+/obj/darkpack_car/limousine/camarilla,
 /turf/open/floor/plating/asphalt,
-/area/vtm/interior/jazzclub)
+/area/vtm/outside/financialdistrict)
 "pZZ" = (
 /obj/structure/chair/wood/darkpack/red{
 	dir = 4
@@ -74791,10 +74819,6 @@
 	},
 /turf/open/floor/wood/ornate,
 /area/vtm/interior/jazzclub)
-"sZQ" = (
-/obj/effect/decal/wallpaper/blue,
-/turf/closed/wall/vampwall/rich,
-/area/vtm/outside/financialdistrict)
 "sZR" = (
 /obj/effect/decal/wallpaper/red,
 /turf/closed/wall/vampwall/bar,
@@ -77527,13 +77551,6 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/plating/asphalt,
 /area/vtm/interior/cabdepot)
-"tHY" = (
-/obj/machinery/light/prince/directional/north,
-/obj/effect/turf_decal/asphaltline/alt{
-	dir = 8
-	},
-/turf/open/floor/plating/asphalt,
-/area/vtm/outside/financialdistrict)
 "tIe" = (
 /obj/effect/mapping_helpers/door/lock_difficulty/four,
 /obj/effect/mapping_helpers/door/access/banu,
@@ -94211,6 +94228,16 @@
 	},
 /turf/open/floor/city/factory,
 /area/vtm/outside/giovanni/courtyard)
+"ycL" = (
+/obj/machinery/door/poddoor/shutters{
+	damage_deflection = 60;
+	id = 435;
+	max_integrity = 300;
+	name = "Parking Shutter";
+	dir = 8
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/interior/jazzclub)
 "ycO" = (
 /obj/effect/decal/wallpaper/paper/darkred,
 /obj/machinery/button/curtain{
@@ -170552,7 +170579,7 @@ uTa
 jcZ
 qyD
 lEF
-sZQ
+klK
 jcZ
 jcZ
 jcZ
@@ -170756,8 +170783,8 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
-tHY
+klK
+dCY
 jcZ
 uTa
 hJj
@@ -170960,9 +170987,9 @@ uTa
 jcZ
 eeQ
 vBb
-sZQ
+klK
 uTa
-mIV
+pZS
 uTa
 hJj
 cXo
@@ -171164,7 +171191,7 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 jcZ
 jcZ
 jcZ
@@ -171368,7 +171395,7 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 uTa
 jcZ
 uTa
@@ -171572,9 +171599,9 @@ uTa
 jcZ
 gPC
 vBb
-sZQ
+klK
 uTa
-mIV
+pZS
 uTa
 hJj
 fPe
@@ -171776,7 +171803,7 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 jyG
 jcZ
 jcZ
@@ -171797,7 +171824,7 @@ mNV
 nBc
 xnV
 gly
-klK
+mIV
 lqn
 mHr
 vXg
@@ -171980,7 +172007,7 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 uTa
 jcZ
 uTa
@@ -172184,9 +172211,9 @@ uTa
 jcZ
 gPC
 vBb
-sZQ
-tHY
-mIV
+klK
+dCY
+pZS
 uTa
 ucp
 ucp
@@ -172205,7 +172232,7 @@ yix
 nBc
 xnV
 gly
-klK
+mIV
 lqn
 qNz
 vXg
@@ -172388,7 +172415,7 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 jcZ
 jcZ
 jcZ
@@ -172409,7 +172436,7 @@ jnk
 nBc
 ifc
 ibp
-bLo
+efO
 wIl
 sTY
 ucp
@@ -172592,13 +172619,13 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 jcZ
 jcZ
 jcZ
-cRj
-cRj
-cRj
+pSk
+pSk
+pSk
 fmq
 imC
 uny
@@ -172796,13 +172823,13 @@ uTa
 jcZ
 gPC
 hvY
-sZQ
+klK
 jcZ
 jcZ
 jcZ
-cRj
-cRj
-cRj
+pSk
+pSk
+pSk
 hJj
 pAV
 tvH
@@ -172812,8 +172839,8 @@ pAV
 tvH
 cnp
 hJj
-wIl
-wIl
+wDG
+gSU
 gSU
 huC
 ucp
@@ -173000,13 +173027,13 @@ uTa
 jcZ
 eeQ
 lEF
-sZQ
+klK
 jyG
 jcZ
 jcZ
-cRj
+pSk
 mIm
-cRj
+pSk
 hJj
 pVX
 mHi
@@ -173016,8 +173043,8 @@ pVX
 mHi
 civ
 hJj
-oqH
-wIl
+myX
+gSU
 gSU
 bhn
 prn
@@ -173204,13 +173231,13 @@ uTa
 jcZ
 gPC
 lEF
-sZQ
+klK
 jcZ
 jcZ
 jcZ
-cRj
-pZS
-cRj
+pSk
+bLo
+pSk
 hJj
 gyK
 uMI
@@ -173220,8 +173247,8 @@ gyK
 uMI
 opv
 hJj
-wIl
-wIl
+myX
+gSU
 gSU
 gSU
 gSU
@@ -173410,11 +173437,11 @@ gPC
 qeX
 vtw
 vtw
-nVo
-nVo
-fmc
+gXm
+gXm
+ycL
 ucp
-btU
+fmc
 ucp
 ucp
 ucp
