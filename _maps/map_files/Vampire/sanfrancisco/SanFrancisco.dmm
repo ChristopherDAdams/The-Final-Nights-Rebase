@@ -8594,17 +8594,6 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior/sewer)
-"cgT" = (
-/obj/structure/platform/lowwall/rich,
-/obj/structure/table/wood/fancy/royalblue,
-/obj/effect/decal/wallpaper/blue/low{
-	plane = -3
-	},
-/obj/structure/curtain/cloth/fancy{
-	pixel_y = 6
-	},
-/turf/open/floor/plating/rough,
-/area/vtm/interior/jazzclub)
 "cgX" = (
 /obj/structure/aquarium/prefilled,
 /obj/machinery/light/small/directional/north,
@@ -20999,10 +20988,6 @@
 /obj/item/masquerade_contract,
 /turf/open/floor/wood/smooth/old,
 /area/vtm/interior/anarch/basement)
-"frC" = (
-/obj/structure/sign/city/crown_blue/directional/north,
-/turf/open/floor/wood/smooth/old,
-/area/vtm/interior/setite)
 "frE" = (
 /obj/effect/decal/pallet,
 /obj/structure/closet/crate/large,
@@ -22099,6 +22084,10 @@
 	color = "#BEAC90"
 	},
 /area/vtm/interior/setite/basement)
+"fFS" = (
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/wood/smooth/old,
+/area/vtm/interior/setite)
 "fFY" = (
 /turf/closed/wall/vampwall/rock{
 	density = 0;
@@ -42489,6 +42478,11 @@
 /obj/item/clothing/under/vampire/janitor,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/hotel)
+"kRA" = (
+/obj/effect/landmark/npcbeacon,
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/plating/sidewalk/old,
+/area/vtm/outside/financialdistrict)
 "kRK" = (
 /obj/structure/table/wood/fancy/royalblack,
 /turf/open/floor/carpet/royalblack,
@@ -56372,10 +56366,16 @@
 /turf/open/floor/carpet/red,
 /area/vtm/interior/millennium_tower)
 "onz" = (
-/obj/effect/landmark/npcbeacon,
-/obj/structure/sign/city/crown_blue/directional/north,
-/turf/open/floor/plating/sidewalk/old,
-/area/vtm/outside/financialdistrict)
+/obj/structure/platform/lowwall/rich,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 6
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior/jazzclub)
 "onB" = (
 /turf/open/floor/wood/herring,
 /area/vtm/outside/giovanni/courtyard)
@@ -171890,7 +171890,7 @@ mxa
 jEa
 uxo
 hJj
-onz
+kRA
 jBa
 jcZ
 jcZ
@@ -175961,7 +175961,7 @@ tjo
 tjo
 tjo
 tjo
-frC
+fFS
 mQw
 bFV
 gXh
@@ -212672,7 +212672,7 @@ wIl
 ucp
 ucp
 hJj
-cgT
+onz
 ucp
 gXD
 lqn
@@ -213281,7 +213281,7 @@ xYp
 lhd
 mqk
 lqn
-cgT
+onz
 lqn
 wIl
 lqn
