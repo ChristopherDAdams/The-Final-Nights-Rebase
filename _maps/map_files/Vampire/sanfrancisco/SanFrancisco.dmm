@@ -4841,7 +4841,9 @@
 /obj/structure/curtain/bounty{
 	pixel_y = 8
 	},
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior)
 "bkH" = (
@@ -5797,9 +5799,8 @@
 "bwG" = (
 /obj/structure/platform/lowwall/rich,
 /obj/structure/table/wood/fancy/royalblue,
-/obj/effect/decal/wallpaper/blue/low,
 /obj/effect/decal/wallpaper/blue/low{
-	layer = 3
+	plane = -3
 	},
 /obj/structure/curtain/cloth/fancy{
 	pixel_y = 6
@@ -8595,14 +8596,10 @@
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior/sewer)
 "cgT" = (
-/obj/structure/platform/lowwall/rich,
-/obj/structure/table/wood/fancy/royalblue,
-/obj/effect/decal/wallpaper/blue/low,
-/obj/structure/curtain/cloth/fancy{
-	pixel_y = 6
-	},
-/turf/open/floor/plating/rough,
-/area/vtm/interior/jazzclub)
+/obj/effect/landmark/npcbeacon,
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/plating/sidewalk/old,
+/area/vtm/outside/financialdistrict)
 "cgX" = (
 /obj/structure/aquarium/prefilled,
 /obj/machinery/light/small/directional/north,
@@ -8752,7 +8749,9 @@
 /turf/open/floor/wood/herring,
 /area/vtm/interior/shop)
 "ciH" = (
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/platform/lowwall/painted/window,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/techshop)
@@ -14705,7 +14704,7 @@
 "dLN" = (
 /obj/structure/platform/lowwall/rich/window,
 /obj/effect/decal/wallpaper/blue/low{
-	layer = 3
+	plane = -3
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior/jazzclub)
@@ -17046,7 +17045,9 @@
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/millennium_tower)
 "esw" = (
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/platform/lowwall/brick_old/window,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
@@ -22095,21 +22096,9 @@
 	},
 /area/vtm/interior/setite/basement)
 "fFS" = (
-/obj/structure/vampfence/rich{
-	dir = 4;
-	pixel_y = 15;
-	name = "bars"
-	},
-/obj/structure/curtain/cloth/fancy/mechanical/luxurious{
-	pixel_y = 15;
-	id = "gerousiaCurtain"
-	},
-/obj/structure/platform/lowwall/rich/window,
-/obj/effect/decal/wallpaper/blue/low{
-	layer = 3
-	},
-/turf/open/floor/plating/rough,
-/area/vtm/interior/jazzclub)
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/wood/smooth/old,
+/area/vtm/interior/setite)
 "fFY" = (
 /turf/closed/wall/vampwall/rock{
 	density = 0;
@@ -25951,7 +25940,9 @@
 /obj/effect/turf_decal/siding/wood/dark{
 	dir = 1
 	},
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/item/paper_bin,
 /obj/structure/platform/lowwall/city,
 /turf/open/floor/plating/rough,
@@ -30382,7 +30373,9 @@
 	pixel_y = 11
 	},
 /obj/structure/platform/lowwall/rich,
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /turf/open/water,
 /area/vtm/interior/jazzclub)
 "hOk" = (
@@ -35025,7 +35018,9 @@
 /area/vtm)
 "iVs" = (
 /obj/structure/platform/lowwall/rich,
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/jazzclub)
@@ -42494,11 +42489,6 @@
 /obj/item/clothing/under/vampire/janitor,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/hotel)
-"kRA" = (
-/obj/effect/decal/wallpaper/blue,
-/obj/structure/sign/city/crown_blue,
-/turf/closed/wall/vampwall/rich,
-/area/vtm/interior/jazzclub)
 "kRK" = (
 /obj/structure/table/wood/fancy/royalblack,
 /turf/open/floor/carpet/royalblack,
@@ -43363,7 +43353,9 @@
 /obj/effect/turf_decal/siding/wood/dark{
 	dir = 1
 	},
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/item/pen{
 	pixel_y = 8
 	},
@@ -56383,9 +56375,8 @@
 "onz" = (
 /obj/structure/platform/lowwall/rich,
 /obj/structure/table/wood/fancy/royalblue,
-/obj/effect/decal/wallpaper/blue/low,
 /obj/effect/decal/wallpaper/blue/low{
-	layer = 3
+	plane = -3
 	},
 /obj/structure/curtain/cloth/fancy{
 	pixel_y = 6
@@ -68497,7 +68488,9 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/banu/haven)
 "rro" = (
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/platform/lowwall/city/window,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/clinic/haven)
@@ -75686,7 +75679,9 @@
 /obj/effect/turf_decal/siding/wood/dark{
 	dir = 1
 	},
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/platform/lowwall/city,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/clinic/haven)
@@ -76986,7 +76981,9 @@
 /area/vtm/outside/pacificheights)
 "tCl" = (
 /obj/structure/table/wood,
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/platform/lowwall/painted,
 /obj/structure/retail/smoke_menu{
 	pixel_y = 7
@@ -77146,7 +77143,9 @@
 	pixel_y = 4;
 	pixel_x = -5
 	},
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/platform/lowwall/painted,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
@@ -83584,7 +83583,6 @@
 /turf/open/floor/wood/herring,
 /area/vtm/interior/tzimisce_manor)
 "vnB" = (
-/obj/machinery/sprinkler/area_managed,
 /obj/effect/turf_decal/siding/wood/dark{
 	dir = 1
 	},
@@ -83592,6 +83590,7 @@
 /obj/effect/turf_decal/siding/wood/dark/corner{
 	dir = 8
 	},
+/obj/machinery/sprinkler/area_managed,
 /turf/open/floor/wood/smooth/old,
 /area/vtm/interior/jazzclub)
 "vnI" = (
@@ -85255,7 +85254,9 @@
 	},
 /area/vtm/interior/sewer/nosferatu_bar)
 "vOh" = (
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /obj/structure/vampfence/rich{
 	dir = 4;
 	pixel_y = 8;
@@ -85872,7 +85873,7 @@
 /obj/structure/platform/lowwall/rich,
 /obj/structure/aquarium/prefilled,
 /obj/effect/decal/wallpaper/blue/low{
-	layer = 3
+	plane = -3
 	},
 /turf/open/floor/wood/smooth,
 /area/vtm/interior/jazzclub)
@@ -88331,7 +88332,9 @@
 	pixel_y = 8;
 	pixel_x = 0
 	},
-/obj/effect/decal/wallpaper/blue/low,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
 /turf/open/floor/city/plating,
 /area/vtm/interior/strip)
 "wBE" = (
@@ -171894,8 +171897,8 @@ vXg
 mxa
 jEa
 uxo
-kRA
-vBb
+hJj
+cgT
 jBa
 jcZ
 jcZ
@@ -172914,7 +172917,7 @@ ucp
 bBs
 ucp
 bBs
-kRA
+hJj
 vBb
 jBa
 jcZ
@@ -175966,7 +175969,7 @@ tjo
 tjo
 tjo
 tjo
-tjo
+fFS
 mQw
 bFV
 gXh
@@ -212479,7 +212482,7 @@ cwx
 wIl
 juf
 wIl
-fFS
+dHF
 kHO
 gSU
 fJb
@@ -212677,13 +212680,13 @@ wIl
 ucp
 ucp
 hJj
-cgT
+onz
 ucp
 gXD
 lqn
 juf
 lqn
-fFS
+dHF
 dOy
 dke
 dPC
@@ -212887,7 +212890,7 @@ lqn
 lqn
 ofO
 fln
-fFS
+dHF
 jSm
 qVU
 lgN
