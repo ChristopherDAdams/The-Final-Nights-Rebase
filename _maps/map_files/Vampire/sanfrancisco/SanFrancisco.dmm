@@ -5797,14 +5797,13 @@
 /turf/open/water/vamp_sewer,
 /area/vtm/interior/sewer)
 "bwG" = (
-/obj/structure/platform/lowwall/rich,
-/obj/structure/table/wood/fancy/royalblue,
 /obj/effect/decal/wallpaper/blue/low{
 	plane = -3
 	},
 /obj/structure/curtain/cloth/fancy{
 	pixel_y = 6
 	},
+/obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/jazzclub)
 "bwM" = (
@@ -8596,10 +8595,16 @@
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior/sewer)
 "cgT" = (
-/obj/effect/landmark/npcbeacon,
-/obj/structure/sign/city/crown_blue/directional/north,
-/turf/open/floor/plating/sidewalk/old,
-/area/vtm/outside/financialdistrict)
+/obj/structure/platform/lowwall/rich,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 6
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior/jazzclub)
 "cgX" = (
 /obj/structure/aquarium/prefilled,
 /obj/machinery/light/small/directional/north,
@@ -20995,10 +21000,9 @@
 /turf/open/floor/wood/smooth/old,
 /area/vtm/interior/anarch/basement)
 "frC" = (
-/obj/structure/table/modern,
-/obj/structure/table/modern,
-/turf/open/floor/carpet/purple,
-/area/vtm/interior/jazzclub)
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/wood/smooth/old,
+/area/vtm/interior/setite)
 "frE" = (
 /obj/effect/decal/pallet,
 /obj/structure/closet/crate/large,
@@ -22095,10 +22099,6 @@
 	color = "#BEAC90"
 	},
 /area/vtm/interior/setite/basement)
-"fFS" = (
-/obj/structure/sign/city/crown_blue/directional/north,
-/turf/open/floor/wood/smooth/old,
-/area/vtm/interior/setite)
 "fFY" = (
 /turf/closed/wall/vampwall/rock{
 	density = 0;
@@ -22347,11 +22347,11 @@
 	pixel_x = -8
 	},
 /obj/item/reagent_containers/cup/glass/bottle/wine,
-/obj/structure/table/modern,
 /obj/machinery/button/curtain{
 	id = "gerousiaCurtain";
 	pixel_x = -1
 	},
+/obj/structure/table/modern,
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/jazzclub)
 "fJf" = (
@@ -46292,9 +46292,8 @@
 /turf/open/floor/city/plating_mono,
 /area/vtm/interior/endron_facility)
 "lPE" = (
-/obj/structure/table/modern,
-/obj/structure/table/modern,
 /obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/structure/table/modern,
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/jazzclub)
 "lPI" = (
@@ -49617,7 +49616,6 @@
 /turf/closed/wall/vampwall/rich,
 /area/vtm/interior/theatre)
 "mHr" = (
-/obj/structure/table/wood/fancy/royalblue,
 /obj/item/statuebust/hippocratic{
 	pixel_y = 14;
 	anchored = 1
@@ -49625,6 +49623,7 @@
 /obj/effect/turf_decal/siding/grey/end{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/jazzclub)
 "mHt" = (
@@ -56373,16 +56372,10 @@
 /turf/open/floor/carpet/red,
 /area/vtm/interior/millennium_tower)
 "onz" = (
-/obj/structure/platform/lowwall/rich,
-/obj/structure/table/wood/fancy/royalblue,
-/obj/effect/decal/wallpaper/blue/low{
-	plane = -3
-	},
-/obj/structure/curtain/cloth/fancy{
-	pixel_y = 6
-	},
-/turf/open/floor/plating/rough,
-/area/vtm/interior/jazzclub)
+/obj/effect/landmark/npcbeacon,
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/plating/sidewalk/old,
+/area/vtm/outside/financialdistrict)
 "onB" = (
 /turf/open/floor/wood/herring,
 /area/vtm/outside/giovanni/courtyard)
@@ -56617,8 +56610,8 @@
 /turf/open/floor/city/bacotell,
 /area/vtm/interior)
 "opX" = (
-/obj/structure/table/modern,
 /obj/machinery/sprinkler/area_managed,
+/obj/structure/table/modern,
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/jazzclub)
 "opY" = (
@@ -66312,7 +66305,6 @@
 /turf/open/floor/wood/smooth/old,
 /area/vtm/interior/church)
 "qNz" = (
-/obj/structure/table/wood/fancy/royalblue,
 /obj/item/statuebust{
 	anchored = 1;
 	pixel_y = 13
@@ -66320,6 +66312,7 @@
 /obj/effect/turf_decal/siding/grey/end{
 	dir = 4
 	},
+/obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/jazzclub)
 "qNM" = (
@@ -67071,8 +67064,8 @@
 /turf/open/floor/city/church,
 /area/vtm/interior/jazzclub)
 "qWz" = (
-/obj/structure/table/modern,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/structure/table/modern,
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/jazzclub)
 "qWE" = (
@@ -76640,7 +76633,6 @@
 /area/vtm/interior/jazzclub)
 "tyC" = (
 /obj/effect/decal/wallpaper/red/low,
-/obj/structure/platform/lowwall/rich,
 /obj/effect/turf_decal/siding/grey,
 /obj/effect/turf_decal/siding/grey{
 	dir = 1
@@ -171898,7 +171890,7 @@ mxa
 jEa
 uxo
 hJj
-cgT
+onz
 jBa
 jcZ
 jcZ
@@ -175969,7 +175961,7 @@ tjo
 tjo
 tjo
 tjo
-fFS
+frC
 mQw
 bFV
 gXh
@@ -212079,7 +212071,7 @@ kHO
 gSU
 cTl
 lPE
-frC
+dUY
 dUY
 shP
 xmX
@@ -212680,7 +212672,7 @@ wIl
 ucp
 ucp
 hJj
-onz
+cgT
 ucp
 gXD
 lqn
@@ -213289,7 +213281,7 @@ xYp
 lhd
 mqk
 lqn
-onz
+cgT
 lqn
 wIl
 lqn
