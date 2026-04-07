@@ -7004,13 +7004,8 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
 "bLo" = (
-/obj/machinery/button/door{
-	id = 435;
-	name = "Parking Shutters Control";
-	pixel_x = -8
-	},
-/obj/structure/table,
-/turf/open/floor/plating/asphalt,
+/obj/structure/platform/lowwall/rich/window,
+/turf/open/floor/plating/rough,
 /area/vtm/interior/jazzclub)
 "bLt" = (
 /obj/effect/turf_decal/siding/wood/dark{
@@ -7398,10 +7393,9 @@
 /turf/open/floor/iron/stairs,
 /area/vtm/interior)
 "bQu" = (
-/obj/effect/landmark/npcbeacon,
 /obj/structure/sign/city/crown_blue/directional/north,
-/turf/open/floor/plating/sidewalk/old,
-/area/vtm/outside/financialdistrict)
+/turf/open/floor/wood/smooth/old,
+/area/vtm/interior/setite)
 "bQB" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/occult/artifact,
@@ -8595,6 +8589,17 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior/sewer)
+"cgT" = (
+/obj/structure/platform/lowwall/rich,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
+	},
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 6
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior/jazzclub)
 "cgX" = (
 /obj/structure/aquarium/prefilled,
 /obj/machinery/light/small/directional/north,
@@ -11821,7 +11826,12 @@
 /obj/effect/mapping_helpers/door/lock_difficulty/six,
 /obj/effect/mapping_helpers/door/lock,
 /obj/structure/vampdoor/wood,
-/obj/effect/turf_decal/siding/wideplating/blue/end,
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 4
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "cYG" = (
@@ -13624,10 +13634,10 @@
 /turf/open/misc/grass/nosmooth,
 /area/vtm/outside/baywalk)
 "dwc" = (
-/obj/effect/turf_decal/siding/wood/light{
-	dir = 4
-	},
 /obj/machinery/light/prince/directional/north,
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 5
+	},
 /turf/open/floor/wood/ornate,
 /area/vtm/interior/jazzclub)
 "dwh" = (
@@ -16190,6 +16200,10 @@
 "efN" = (
 /turf/open/misc/grass,
 /area/vtm/outside/pacificheights/forest)
+"efO" = (
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "efT" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/item/food/grown/trumpet,
@@ -17945,6 +17959,9 @@
 "eEf" = (
 /obj/structure/curtain/cloth/fancy{
 	pixel_y = 40
+	},
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 1
 	},
 /turf/open/floor/wood/ornate,
 /area/vtm/interior/jazzclub)
@@ -20946,6 +20963,10 @@
 /obj/structure/chair/wood/darkpack{
 	dir = 4
 	},
+/obj/machinery/light/warm/dim/directional/west,
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 8
+	},
 /turf/open/floor/wood/ornate,
 /area/vtm/interior/jazzclub)
 "fqZ" = (
@@ -21412,6 +21433,11 @@
 /obj/effect/decal/wallpaper/paper,
 /turf/closed/wall/vampwall/junk/alt,
 /area/vtm/interior/shop)
+"fwA" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/siding/wood/light,
+/turf/open/floor/wood/ornate,
+/area/vtm/interior/jazzclub)
 "fwC" = (
 /obj/effect/decal/pallet,
 /obj/structure/closet/crate/large{
@@ -22660,6 +22686,9 @@
 "fPe" = (
 /obj/machinery/light/warm/dim/directional/east,
 /mob/living/carbon/human/npc/bouncer/elysium/theatre_backdoor,
+/obj/structure/chair/wood/darkpack{
+	dir = 8
+	},
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/jazzclub)
 "fPo" = (
@@ -24081,11 +24110,11 @@
 /turf/open/floor/wood/smooth/old,
 /area/vtm/interior/apartment)
 "ggW" = (
-/obj/effect/turf_decal/siding/wood/light{
-	dir = 1
-	},
 /obj/structure/curtain/cloth/fancy{
 	pixel_y = 40
+	},
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 9
 	},
 /turf/open/floor/wood/ornate,
 /area/vtm/interior/jazzclub)
@@ -25362,6 +25391,10 @@
 	},
 /obj/effect/turf_decal/siding/wood/light{
 	dir = 5
+	},
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 15;
+	pixel_x = 32
 	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
@@ -40035,6 +40068,15 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet/green,
 /area/vtm/interior)
+"klK" = (
+/obj/effect/turf_decal/siding/wood/light/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/light/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "klN" = (
 /obj/structure/chair/wood/darkpack{
 	dir = 1
@@ -42452,10 +42494,14 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/hotel)
 "kRA" = (
-/obj/effect/turf_decal/asphaltline/alt{
-	dir = 8
+/obj/structure/platform/lowwall/rich/window,
+/obj/effect/decal/wallpaper/blue/low{
+	plane = -3
 	},
-/turf/open/floor/plating/asphalt,
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 6
+	},
+/turf/open/floor/plating/rough,
 /area/vtm/interior/jazzclub)
 "kRK" = (
 /obj/structure/table/wood/fancy/royalblack,
@@ -47085,9 +47131,12 @@
 /turf/open/floor/city/factory,
 /area/vtm/interior/strip)
 "maX" = (
-/obj/structure/sign/city/crown_blue/directional/north,
-/turf/open/floor/wood/smooth/old,
-/area/vtm/interior/setite)
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 15;
+	pixel_x = 32
+	},
+/turf/open/floor/carpet/purple,
+/area/vtm/interior/jazzclub)
 "mbc" = (
 /obj/structure/safe,
 /obj/item/stack/dollar/hundred,
@@ -50829,7 +50878,7 @@
 /area/vtm/outside/baywalk)
 "mVB" = (
 /obj/effect/turf_decal/siding/wood/light,
-/obj/structure/chair/wood/darkpack/red{
+/obj/structure/chair/wood/darkpack{
 	dir = 1
 	},
 /turf/open/floor/wood/ornate,
@@ -53460,12 +53509,6 @@
 "nFc" = (
 /turf/closed/wall/vampwall/rustbad,
 /area/vtm/interior/sewer)
-"nFh" = (
-/obj/effect/turf_decal/siding/wood/light{
-	dir = 4
-	},
-/turf/open/floor/wood/ornate,
-/area/vtm/interior/jazzclub)
 "nFk" = (
 /obj/structure/chair/office/darkpack/green{
 	dir = 1
@@ -54172,6 +54215,11 @@
 /obj/item/mop,
 /turf/open/floor/wood/smooth,
 /area/vtm/interior/setite)
+"nOe" = (
+/obj/effect/landmark/npcbeacon,
+/obj/structure/sign/city/crown_blue/directional/north,
+/turf/open/floor/plating/sidewalk/old,
+/area/vtm/outside/financialdistrict)
 "nOh" = (
 /obj/structure/table,
 /obj/structure/fluff/tv{
@@ -56331,15 +56379,17 @@
 /turf/open/floor/carpet/red,
 /area/vtm/interior/millennium_tower)
 "onz" = (
-/obj/structure/platform/lowwall/rich,
-/obj/structure/table/wood/fancy/royalblue,
-/obj/effect/decal/wallpaper/blue/low{
-	plane = -3
+/obj/effect/mapping_helpers/door/access/jazz_club,
+/obj/effect/mapping_helpers/door/autoname,
+/obj/effect/mapping_helpers/door/lock_difficulty/six,
+/obj/structure/vampdoor/wood{
+	dir = 4
 	},
-/obj/structure/curtain/cloth/fancy{
-	pixel_y = 6
+/obj/effect/mapping_helpers/door/unlock,
+/obj/effect/turf_decal/siding/wood/light/end{
+	dir = 8
 	},
-/turf/open/floor/plating/rough,
+/turf/open/floor/wood/smooth,
 /area/vtm/interior/jazzclub)
 "onB" = (
 /turf/open/floor/wood/herring,
@@ -56555,6 +56605,10 @@
 /obj/effect/turf_decal/siding/wood/light{
 	dir = 6
 	},
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 15;
+	pixel_x = 32
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "opE" = (
@@ -56652,8 +56706,13 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/outside/culture)
 "oqH" = (
-/obj/machinery/light/warm/dim/directional/north,
-/turf/open/floor/wood/smooth,
+/obj/effect/decal/wallpaper/blue,
+/obj/machinery/button/door{
+	id = 435;
+	name = "Parking Shutters Control";
+	pixel_x = -8
+	},
+/turf/closed/wall/vampwall/rich,
 /area/vtm/interior/jazzclub)
 "oqM" = (
 /obj/effect/landmark/npcactivity,
@@ -58868,6 +58927,9 @@
 /area/vtm/outside/giovanni/courtyard)
 "oTs" = (
 /obj/machinery/photocopier/prebuilt,
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 10
+	},
 /turf/open/floor/wood/smooth,
 /area/vtm/interior/jazzclub)
 "oTv" = (
@@ -64631,6 +64693,10 @@
 /obj/effect/mapping_helpers/door/lock_difficulty/ten,
 /turf/open/floor/city/plating_mono,
 /area/vtm/interior/endron_facility)
+"qrX" = (
+/obj/effect/landmark/start/darkpack/primogen/lasombra,
+/turf/open/floor/plating/roofwalk,
+/area/vtm)
 "qsn" = (
 /obj/structure/hedge{
 	pixel_y = 6
@@ -64943,6 +65009,13 @@
 	},
 /turf/open/water/beach/vamp/deep,
 /area/vtm/outside/pacificheights/community)
+"qxa" = (
+/obj/effect/turf_decal/siding/wood/light,
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 10
+	},
+/turf/open/floor/wood/ornate,
+/area/vtm/interior/jazzclub)
 "qxe" = (
 /obj/structure/chair/sofa/corp{
 	dir = 4
@@ -70708,7 +70781,6 @@
 /area/vtm/interior/sewer)
 "rVZ" = (
 /obj/structure/chair/stool/bar/darkpack/red,
-/obj/effect/landmark/start/darkpack/primogen/brujah,
 /turf/open/floor/plating/canalplating,
 /area/vtm/interior/sewer)
 "rWb" = (
@@ -81598,6 +81670,10 @@
 /obj/effect/turf_decal/siding/wood/light{
 	dir = 4
 	},
+/obj/structure/curtain/cloth/fancy{
+	pixel_y = 15;
+	pixel_x = 32
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "uMR" = (
@@ -91485,6 +91561,12 @@
 /obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood/herring,
 /area/vtm/interior/endron_facility)
+"xtv" = (
+/obj/effect/turf_decal/asphaltline/alt{
+	dir = 8
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/interior/jazzclub)
 "xtH" = (
 /obj/effect/decal/painting{
 	pixel_y = 32
@@ -170392,10 +170474,10 @@ hOc
 aNz
 sQL
 hJj
-wIl
+xbH
 fqX
 oTs
-hJj
+kRA
 vBb
 jBa
 jcZ
@@ -170574,7 +170656,7 @@ lEF
 hJj
 dCY
 pSk
-kRA
+xtv
 hJj
 vCm
 uQO
@@ -170598,8 +170680,8 @@ qFr
 dLN
 eEf
 rio
-jEa
-hJj
+fwA
+kRA
 lEF
 jBa
 jcZ
@@ -170776,9 +170858,9 @@ jcZ
 eeQ
 vBb
 hJj
-kRA
+xtv
 pZS
-kRA
+xtv
 hJj
 cXo
 iop
@@ -170800,10 +170882,10 @@ amD
 vhB
 mKx
 hJj
-oqH
+nTc
 lqn
-wIl
-hJj
+pAp
+kRA
 vBb
 jBa
 jcZ
@@ -171006,7 +171088,7 @@ ibd
 hJj
 dwc
 efp
-nFh
+bJj
 hJj
 lEF
 uSO
@@ -171184,9 +171266,9 @@ jcZ
 gPC
 lEF
 hJj
-kRA
+xtv
 pSk
-kRA
+xtv
 hJj
 sJs
 iop
@@ -171388,9 +171470,9 @@ jcZ
 gPC
 vBb
 hJj
-kRA
+xtv
 pZS
-kRA
+xtv
 hJj
 fPe
 iop
@@ -171413,7 +171495,7 @@ fCs
 gmV
 ucp
 hJj
-eQm
+onz
 ucp
 hJj
 vBb
@@ -171617,9 +171699,9 @@ pAp
 mHr
 vXg
 ggW
-wIl
-rfX
-hJj
+klK
+qxa
+kRA
 lEF
 jBa
 jcZ
@@ -171796,9 +171878,9 @@ jcZ
 gPC
 lEF
 hJj
-kRA
+xtv
 pSk
-kRA
+xtv
 hJj
 amD
 xsT
@@ -171823,8 +171905,8 @@ vXg
 mxa
 jEa
 uxo
-hJj
-bQu
+kRA
+vBb
 jBa
 jcZ
 jcZ
@@ -172002,7 +172084,7 @@ vBb
 hJj
 dCY
 pZS
-kRA
+xtv
 ucp
 ucp
 ucp
@@ -172027,7 +172109,7 @@ vXg
 iNo
 aae
 bJj
-hJj
+kRA
 lEF
 jBa
 jcZ
@@ -172207,10 +172289,10 @@ hJj
 pSk
 pSk
 pSk
-pSk
+oqH
 wvi
 mIm
-ucp
+hJj
 qAd
 dlE
 nRV
@@ -172233,7 +172315,7 @@ ucp
 ucp
 hJj
 lEF
-diq
+jBa
 jcZ
 jcZ
 uTa
@@ -172436,7 +172518,7 @@ vZm
 eVM
 eVM
 hJj
-vBb
+nOe
 jBa
 jcZ
 jcZ
@@ -173024,7 +173106,7 @@ pSk
 pSk
 pSk
 pSk
-bLo
+pSk
 pSk
 hJj
 gyK
@@ -173038,10 +173120,10 @@ hJj
 myX
 oik
 gSU
-gSU
-gSU
-gSU
-gSU
+maX
+maX
+maX
+maX
 gSU
 ucp
 duy
@@ -173231,21 +173313,21 @@ ycL
 ucp
 fmc
 ucp
+bLo
+bLo
+bLo
+ucp
+bLo
+bLo
+bLo
 ucp
 ucp
 ucp
 ucp
-ucp
-ucp
-ucp
-ucp
-ucp
-ucp
-ucp
-qQL
-qQL
-qQL
-qQL
+bLo
+bLo
+bLo
+bLo
 ucp
 ucp
 ucp
@@ -175895,7 +175977,7 @@ tjo
 tjo
 tjo
 tjo
-maX
+bQu
 mQw
 bFV
 gXh
@@ -212191,9 +212273,9 @@ mjT
 hJj
 yhI
 nTc
-ucp
-ucp
-ucp
+wIl
+hJj
+euo
 ucp
 hJj
 pZE
@@ -212395,10 +212477,10 @@ mjT
 hJj
 oin
 nTc
+wIl
 hJj
 wIl
-wIl
-wIl
+efO
 hJj
 gzy
 dJo
@@ -212599,14 +212681,14 @@ mjT
 hJj
 bYo
 nTc
+wIl
 hJj
-wIl
-wIl
-wIl
+efO
+efO
 ucp
 ucp
 hJj
-onz
+cgT
 ucp
 gXD
 lqn
@@ -212804,8 +212886,8 @@ ucp
 hJj
 euo
 ucp
-hJj
-euo
+ucp
+ucp
 ucp
 hJj
 lqn
@@ -213215,7 +213297,7 @@ xYp
 lhd
 mqk
 lqn
-onz
+cgT
 lqn
 wIl
 lqn
@@ -213835,7 +213917,7 @@ lqn
 lqn
 lqn
 wIl
-lqn
+wIl
 hJj
 cwx
 wIl
@@ -214038,7 +214120,7 @@ ucp
 hJj
 neA
 ucp
-wIl
+hJj
 wIl
 hJj
 wIl
@@ -214242,7 +214324,7 @@ oqV
 hJj
 bkH
 uiS
-wIl
+hJj
 wIl
 hJj
 wIl
@@ -258186,7 +258268,7 @@ xEp
 xEp
 xEp
 xEp
-xEp
+qrX
 xEp
 xEp
 vWf
