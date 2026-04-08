@@ -157,3 +157,7 @@
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed/Initialize(mapload)
 	. = ..()
 	close()
+
+/obj/structure/curtain/cloth/fancy/blue
+	icon_type = "cur_fancy_blue"
+	icon_state = "cur_fancy_blue-open"
