@@ -66,6 +66,7 @@
 /obj/effect/landmark/start/citizen : /obj/effect/landmark/start/darkpack/citizen/citizen
 /obj/effect/landmark/start/strip : /obj/effect/landmark/start/darkpack/citizen/club_worker
 /obj/effect/landmark/start/club_worker : /obj/effect/landmark/start/darkpack/citizen/club_worker
+/obj/effect/landmark/start/jazzclub_worker : /obj/effect/landmark/start/darkpack/citizen/jazzclub_worker
 /obj/effect/landmark/start/vjanitor : /obj/effect/landmark/start/darkpack/citizen/janitor
 /obj/effect/landmark/start/janitor : /obj/effect/landmark/start/darkpack/citizen/janitor
 /obj/effect/landmark/start/priest : /obj/effect/landmark/start/darkpack/citizen/priest

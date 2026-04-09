@@ -63,6 +63,15 @@
 	label_class = "strip_club"
 	ui_color = "#a566a5ff"
 
+/datum/job_department/jazz_club
+	department_name = DEPARTMENT_JAZZ_CLUB
+	department_bitflags = DEPARTMENT_BITFLAG_JAZZ_CLUB
+	department_head = /datum/job/vampire/primogen_ventrue
+	department_experience_type = EXP_TYPE_JAZZCLUB
+	display_order = 1
+	label_class = "jazz_club"
+	ui_color = "#7372ac"
+
 /datum/job_department/giovanni
 	department_name = DEPARTMENT_GIOVANNI
 	department_bitflags = DEPARTMENT_BITFLAG_GIOVANNI
