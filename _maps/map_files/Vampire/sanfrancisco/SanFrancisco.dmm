@@ -69627,7 +69627,9 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/outside/culture)
 "rNq" = (
-/obj/machinery/light/prince/directional/east,
+/obj/machinery/light/prince/directional/east{
+	pixel_y = 8
+	},
 /turf/open/floor/wood/smooth,
 /area/vtm)
 "rNr" = (
@@ -71198,6 +71200,16 @@
 /obj/machinery/shower/directional/west,
 /turf/open/floor/city/industrial,
 /area/vtm/interior/setite)
+"sjG" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/siding/wood/light{
+	dir = 4
+	},
+/obj/machinery/light/prince/directional/west{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "sjK" = (
 /obj/structure/railing,
 /obj/structure/table/wood,
@@ -73666,6 +73678,10 @@
 	},
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/supply)
+"sSq" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "sSr" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/item/clothing/under/suit/white,
@@ -83771,6 +83787,15 @@
 /obj/effect/mapping_helpers/door/lock_difficulty/eight,
 /turf/open/floor/wood/smooth,
 /area/vtm/interior/millennium_tower/f2)
+"vAs" = (
+/obj/structure/platform/lowwall/rich,
+/obj/structure/aquarium/prefilled,
+/obj/structure/curtain/cloth/fancy/blue{
+	pixel_y = 8
+	},
+/obj/effect/decal/wallpaper/blue/low,
+/turf/open/floor/wood/smooth,
+/area/vtm/interior/jazzclub)
 "vAu" = (
 /obj/machinery/light/directional/east{
 	pixel_y = 16
@@ -127248,10 +127273,10 @@ ruV
 ngF
 wQM
 hCr
-uxF
+sjG
 lqn
 lqn
-uxF
+sjG
 wQM
 hCr
 uxF
@@ -170283,7 +170308,7 @@ vZm
 jnk
 asn
 ePJ
-vXg
+vAs
 ibj
 sER
 rsm
@@ -211281,7 +211306,7 @@ dTE
 rUV
 ssj
 ucp
-wIl
+sSq
 uBE
 ier
 utH
