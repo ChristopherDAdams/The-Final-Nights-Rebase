@@ -16,9 +16,8 @@
 
 	alt_titles = list(
 		"Jazz Service Associate",
-		"Jazz Performer",
 		"Jazz Featured Artist",
-		"Jazz Guest Safety Supervisor"
+		"Jazz Guest Safety Supervisor",
 		"Jazz Beverage Curator",
 		"Jazz Floor Attendant",
 		"Jazz Culinary Staff",
