@@ -17,7 +17,7 @@
 #define JOB_GRAVEYARD_KEEPER "Graveyard Keeper"
 #define JOB_STREET_JANITOR "Street Janitor"
 #define JOB_CLUB_WORKER "Club Worker"
-#define JOB_JAZZ_CLUB_ASSOCIATE "Jazz Club Worker"
+#define JOB_JAZZ_CLUB_ASSOCIATE "Jazz Club Associate"
 #define JOB_TAXI_DRIVER "Taxi Driver"
 
 //Camarilla
