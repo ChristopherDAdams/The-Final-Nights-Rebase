@@ -15,18 +15,19 @@
 	)
 
 	alt_titles = list(
-		"Jazz Employee",
+		"Jazz Service Associate",
 		"Jazz Performer",
-		"Jazz Bouncer",
-		"Jazz Bartender",
-		"Jazz Waiter",
-		"Jazz Cook",
-		"Jazz Host"
+		"Jazz Featured Artist",
+		"Jazz Guest Safety Supervisor"
+		"Jazz Beverage Curator",
+		"Jazz Floor Attendant",
+		"Jazz Culinary Staff",
+		"Jazz Guest Coordinator"
 	)
 
 	allowed_splats = list(SPLAT_KINDRED, SPLAT_GHOUL, SPLAT_KINFOLK, SPLAT_NONE)
 
-	description = "Offer jazz club services. You work for the jazz club owners, and serve high class clients, like board members and other guests. You are either clueless, paid well enough to not talk, or bound to secrecy by other means."
+	description = "You are employeed by the jazz club managers, and you provide it's services with class and dignity. You are either clueless, paid well enough not to talk, or bound to secrecy by other means."
 	minimal_masquerade = 3
 
 /datum/outfit/job/vampire/jazzclub_worker
