@@ -67,7 +67,7 @@
 	department_name = DEPARTMENT_JAZZ_CLUB
 	department_bitflags = DEPARTMENT_BITFLAG_JAZZ_CLUB
 	department_head = /datum/job/vampire/primogen_ventrue
-	department_experience_type = EXP_TYPE_JAZZCLUB
+	department_experience_type = EXP_TYPE_JAZZ_CLUB
 	display_order = 1
 	label_class = "jazz_club"
 	ui_color = "#7372ac"

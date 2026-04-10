@@ -17,7 +17,7 @@
 #define JOB_GRAVEYARD_KEEPER "Graveyard Keeper"
 #define JOB_STREET_JANITOR "Street Janitor"
 #define JOB_CLUB_WORKER "Club Worker"
-#define JOB_JAZZCLUB_WORKER "JazzClub Worker"
+#define JOB_JAZZ_CLUB_ASSOCIATE "Jazz Club Worker"
 #define JOB_TAXI_DRIVER "Taxi Driver"
 
 //Camarilla
@@ -269,4 +269,4 @@ DEFINE_BITFIELD(departments_bitflags, list(
 #define EXP_TYPE_MANOR "Tzimisce Manor"
 #define EXP_TYPE_CHURCH "Church"
 #define EXP_TYPE_CLUB "Strip Club"
-#define EXP_TYPE_JAZZCLUB "Jazz Club"
+#define EXP_TYPE_JAZZ_CLUB "Jazz Club"
