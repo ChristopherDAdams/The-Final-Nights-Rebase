@@ -19,6 +19,7 @@ JOB_START_HELPER(anarch/emissary, JOB_EMISSARY)
 JOB_START_HELPER(anarch/sweeper, JOB_SWEEPER)
 JOB_START_HELPER(anarch/tapster, JOB_TAPSTER)
 
+
 /* Axe Gang */
 /obj/effect/landmark/start/darkpack/axe
 	name = "generic axe gang start"
