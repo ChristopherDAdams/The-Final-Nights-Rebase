@@ -6386,6 +6386,15 @@
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/outside/supply)
+"bEI" = (
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wideplating/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/vtm/interior/jazzclub)
 "bEO" = (
 /obj/effect/decal/cleanable/trash,
 /turf/open/floor/plating/sidewalk,
@@ -10118,6 +10127,16 @@
 	icon_state = "carpet_black"
 	},
 /area/vtm/interior/sewer/nosferatu_warren)
+"cAj" = (
+/obj/structure/chair/stool/bar/darkpack/blue,
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/vtm/interior/jazzclub)
 "cAt" = (
 /obj/effect/turf_decal/siding/wideplating/red{
 	dir = 1
@@ -31698,6 +31717,9 @@
 	pixel_y = 24
 	},
 /obj/effect/decal/shadow,
+/obj/effect/turf_decal/siding/wideplating/blue/end{
+	dir = 1
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "igC" = (
@@ -39904,6 +39926,10 @@
 	},
 /obj/effect/decal/shadow,
 /obj/structure/chair/stool/bar/darkpack/blue,
+/obj/effect/turf_decal/siding/wideplating/blue,
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 1
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "knS" = (
@@ -55761,9 +55787,6 @@
 /obj/effect/landmark/start/darkpack/citizen/citizen,
 /turf/open/floor/city/circled,
 /area/vtm/interior/shop)
-"olA" = (
-/turf/closed/wall/vampwall/brick,
-/area/vtm/outside/financialdistrict)
 "olF" = (
 /obj/effect/turf_decal/siding/grey{
 	dir = 4
@@ -68186,6 +68209,12 @@
 /turf/open/floor/wood/herring,
 /area/vtm/interior/endron_facility)
 "rsm" = (
+/obj/effect/turf_decal/siding/wideplating/blue{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wideplating/blue/corner{
+	dir = 4
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "rsv" = (
@@ -72855,6 +72884,9 @@
 /area/vtm/interior/apartment/pacific)
 "sER" = (
 /obj/structure/chair/stool/bar/darkpack/blue,
+/obj/effect/turf_decal/siding/wideplating/blue/end{
+	dir = 1
+	},
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/jazzclub)
 "sET" = (
@@ -171324,8 +171356,8 @@ vZm
 ePJ
 bwG
 igB
-sER
-rsm
+cAj
+bEI
 noo
 iop
 mNV
@@ -175415,7 +175447,7 @@ tjo
 qnf
 tOW
 tjo
-olA
+bMY
 bMY
 bMY
 jhI
