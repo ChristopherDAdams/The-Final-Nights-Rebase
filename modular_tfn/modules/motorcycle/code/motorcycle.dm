@@ -4,6 +4,7 @@
 
 //Motorcycle Convert
 
+//Smoke
 /obj/effect/temp_visual/car
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
@@ -11,10 +12,12 @@
 	light_range = 1
 	duration = 0.5 SECONDS
 
+//What
 /obj/effect/temp_visual/telegraphing/car
 	icon_state = "target_circle"
 	duration = 0.5 SECONDS
 
+//Sound
 /datum/looping_sound/car_engine
 	start_sound = 'modular_darkpack/modules/cars/sounds/start.ogg'
 	start_length = 2 SECONDS
@@ -22,10 +25,10 @@
 	mid_length = 1.1 SECONDS
 	end_sound = 'modular_darkpack/modules/cars/sounds/stop.ogg'
 
+//Storage, Not needed.
 /obj/car_trunk
 	name = "car trunk"
 	desc = "How did this get out of the car."
-
 /datum/storage/car
 	animated = FALSE
 	max_slots = 40
@@ -38,18 +41,12 @@
 	. = ..()
 	set_locked(STORAGE_FULLY_LOCKED)
 
+//Could use it. Maybe.
 /datum/storage/car/limo
 	max_slots = 45
 
-/datum/storage/car/truck
-	max_slots = 100
-	max_total_storage = 200
-	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
-/datum/storage/car/van
-	max_slots = 60
-	max_specific_storage = WEIGHT_CLASS_GIGANTIC
-
+//Core Datum
 /obj/darkpack_car
 	name = "car"
 	desc = "Take me home, country roads..."
@@ -60,7 +57,6 @@
 	density = TRUE
 	resistance_flags = UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	throwforce = 150
-
 
 	MAP_SWITCH(pixel_x = 0, pixel_x = -32)
 	MAP_SWITCH(pixel_y = 0, pixel_y = -32)
@@ -114,6 +110,7 @@
 	COOLDOWN_DECLARE(impact_delay)
 	COOLDOWN_DECLARE(beep_cooldown)
 
+//Init
 /obj/darkpack_car/Initialize(mapload)
 	. = ..()
 	engine_sound_loop = new(src)
@@ -150,6 +147,7 @@
 	add_overlay(image(icon = src.icon, icon_state = src.icon_state, pixel_x = -32, pixel_y = -32))
 	icon_state = "empty"
 
+//delete
 /obj/darkpack_car/Destroy()
 	STOP_PROCESSING(SScarpool, src)
 	QDEL_NULL(engine_sound_loop)
@@ -157,6 +155,7 @@
 	empty_car()
 	. = ..()
 
+//Alternate actions.
 /obj/darkpack_car/click_alt(mob/user)
 	var/list/radial_menu_options = list(
 		"Open Trunk" = icon('modular_darkpack/modules/cars/icons/car_actions.dmi', "baggage"),
@@ -192,6 +191,7 @@
 	else
 		to_chat(user, span_warning("You've failed to get [occupent] out of [src]."))
 
+//Interactions.
 /obj/darkpack_car/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/gas_can))
 		return try_refuel(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -285,6 +285,7 @@
 				locked = !locked
 				return TRUE
 
+//damage
 /obj/darkpack_car/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(I.force)
@@ -320,6 +321,7 @@
 		if(prob(50))
 			L.apply_damage(P.damage, P.damage_type, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
+//Examine
 /obj/darkpack_car/examine(mob/user)
 	. = ..()
 	if(user.loc == src)
@@ -356,6 +358,7 @@
 			empty_car()
 			explosion(loc,0,1,3,4)
 
+//Break
 /obj/darkpack_car/atom_break(damage_flag)
 	. = ..()
 	stop_engine()
@@ -363,6 +366,7 @@
 	color = "#919191"
 	broken = TRUE
 
+//Lights!
 /obj/darkpack_car/proc/set_headlight_on(new_value)
 	if(headlight_on == new_value)
 		return
@@ -375,6 +379,7 @@
 
 	set_light_on(headlight_on)
 
+//convert to "buckle"/ mount motorcyle
 /obj/darkpack_car/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	if(!isliving(dropped))
@@ -407,6 +412,7 @@
 	to_chat(dropped, span_warning("You fail to enter [src]."))
 	return
 
+//Enter
 /obj/darkpack_car/proc/driver_enter(mob/living/user)
 	if(driver)
 		return
@@ -416,7 +422,7 @@
 		new_action.Grant(user)
 	enter_car(user)
 	return TRUE
-
+//Passenger
 /obj/darkpack_car/proc/passenger_enter(mob/living/user)
 	if(passengers.len >= max_passengers)
 		return
@@ -470,6 +476,7 @@
 	for(var/datum/action/darkpack_car/C in dumpe.actions)
 		qdel(C)
 
+//Crashing
 /obj/darkpack_car/Bump(atom/bumped_atom)
 	. = ..()
 	var/prev_speed = round(abs(speed_in_pixels)/4)
@@ -526,6 +533,7 @@
 	take_damage(dam)
 	return
 
+//Movement, Bike will be way more simple.
 /obj/darkpack_car/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	last_pos["x"] = x
@@ -614,6 +622,7 @@
 	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
 	update_last_pos(moved_x, moved_y)
 
+//dodge?
 /obj/darkpack_car/proc/handle_npc_dodge(turf/target, angle)
 	for(var/turf/T in get_line(src, target))
 		var/list/unpassable = T.get_blocking_contents(FALSE, src)
@@ -636,6 +645,7 @@
 					if(prob(50))
 						NPC.realistic_say(pick(NPC.socialrole.car_dodged))
 
+//not needed?
 /// Moves the client cameras of living inside of the car.
 /obj/darkpack_car/proc/move_car_riders(moved_x, moved_y)
 	for(var/mob/living/rider in src)
@@ -751,7 +761,7 @@
 #undef CAR_TANK_MAX
 
 
-
+//Time for bed.
 
 
 
