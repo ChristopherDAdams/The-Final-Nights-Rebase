@@ -3,33 +3,75 @@
 
 
 //Motorcycle Convert
+// Second Pass
 
 //Smoke
+// Commenting for now.
+/*
 /obj/effect/temp_visual/car
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	layer = BELOW_MOB_LAYER
 	light_range = 1
 	duration = 0.5 SECONDS
+*/
 
-//What
+//What. Still what, probably needed.
 /obj/effect/temp_visual/telegraphing/car
 	icon_state = "target_circle"
 	duration = 0.5 SECONDS
 
-//Sound
-/datum/looping_sound/car_engine
-	start_sound = 'modular_darkpack/modules/cars/sounds/start.ogg'
+//Sound. Motorcycle! I'll make it fancy later.
+/datum/looping_sound/motorcycle_engine
+	start_sound = 'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg'
 	start_length = 2 SECONDS
-	mid_sounds = list('modular_darkpack/modules/cars/sounds/work.ogg')
+	mid_sounds = list('modular_tfn/modules/motorcycle/sound/bike_idle.ogg')
 	mid_length = 1.1 SECONDS
-	end_sound = 'modular_darkpack/modules/cars/sounds/stop.ogg'
+	end_sound = 'modular_tfn/modules/motorcycle/sound/bike_idle_kill.ogg'
+
+/*
+//Start Idle sound.
+/obj/vehicle/ridden/motorcycle/proc/play_idle_loop()
+	if(idle_looping) return
+	idle_looping = TRUE
+	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg', 100, FALSE, 5, 1.3, 0, 220)
+	addtimer(CALLBACK(src, /obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat), 2 SECONDS)
+
+/obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat()
+	if(!on || !idle_looping) return
+	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle.ogg', 100, FALSE, 5, 1.3, 0, 221)
+	addtimer(CALLBACK(src, /obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat), 2 SECONDS)
+
+/// Called when engine stops
+/obj/vehicle/ridden/motorcycle/proc/stop_idle_loop()
+	idle_looping = FALSE
+	var/sound/stop_idle = sound(null, repeat=0, channel=221)
+	hearers(src) << stop_idle
+	if(!on)
+		playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_kill.ogg', 100, FALSE, 5, 1.3, 0, 224)
+
+/obj/vehicle/ridden/motorcycle/proc/handle_rev_sound()
+	last_run_sound = world.time
+	stop_idle_loop()
+	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_rev.ogg', 100, TRUE, 10, 1.5, 0, 223)
+	addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 1 SECONDS)
+
+/obj/vehicle/ridden/motorcycle/proc/handle_run_sound()
+	if((world.time - last_run_sound) >= 4.5 SECONDS)
+		last_run_sound = world.time
+		stop_idle_loop()
+		playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_run.ogg', 100, TRUE, 10, 1.5, 0, 222)
+		addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 4.5 SECONDS)
+*/
+
 
 //Storage, Not needed.
-/obj/car_trunk
+// Commenting for now.
+/*
+/obj/motorcycle_saddlebags
 	name = "car trunk"
 	desc = "How did this get out of the car."
-/datum/storage/car
+/datum/storage/motorcycle
 	animated = FALSE
 	max_slots = 40
 	max_total_storage = 100
@@ -37,21 +79,17 @@
 	insert_on_attack = FALSE
 	click_alt_open = FALSE
 
-/datum/storage/car/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+/datum/storage/motorcycle/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_locked(STORAGE_FULLY_LOCKED)
-
-//Could use it. Maybe.
-/datum/storage/car/limo
-	max_slots = 45
-
+*/
 
 //Core Datum
-/obj/darkpack_car
-	name = "car"
-	desc = "Take me home, country roads..."
-	icon_state = "2"
-	icon = 'modular_darkpack/modules/cars/icons/cars.dmi'
+/obj/motorcycle
+	name = "motorcycle"
+	desc = "A motorcycle; a beautiful and dangerous deathtrap on two wheels. Not meant for faint of heart or cowardly."
+	icon_state = "motorcycle_basic"
+	icon = 'modular_tfn/modules/motorcycle/icons/obj/motorcycle.dmi'
 	anchored = TRUE
 	layer = CAR_LAYER
 	density = TRUE
@@ -61,83 +99,89 @@
 	MAP_SWITCH(pixel_x = 0, pixel_x = -32)
 	MAP_SWITCH(pixel_y = 0, pixel_y = -32)
 
+	//glide?
 	glide_size = 96
 
+	//light, keeping it.
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_LIGHT_ORANGE
 	light_range = 6
 	light_power = 1
 	light_on = FALSE
 
+	//Movement will need refactored.
 	var/movement_vector = 0 //0-359 degrees
 	var/speed_in_pixels = 0 // 16 pixels (turf is 2x2m) = 1 meter per 1 SECOND (process fire). Minus equals to reverse, max should be 444
 	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0, "x_frwd" = 0, "y_frwd" = 0)
 
+	//"Health"
 	max_integrity = 400
 	integrity_failure = 0.25
 	var/broken = FALSE
 
+	//We'll drive hooooome, with one headlight.
 	var/image/headlight_image
 	var/headlight_on = FALSE
 
+	//Who's on me? One Driver, one passenger max.
 	var/mob/living/driver
 	var/list/passengers = list()
-	var/max_passengers = 3
+	var/max_passengers = 1
+
 
 	var/speed = 1	//Future
 	var/stage = 1
+
+	//Engine, key, etc.
 	var/on = FALSE
 	var/locked = TRUE
 	var/lockpick_difficulty = 6
 	var/access = "none"
 
+	//Fix this for saddle bags.
+	/*
 	var/car_storage_type = /datum/storage/car
 	var/obj/car_trunk/trunk
+	*/
 
+	//Destroyed.
 	var/exploded = FALSE
+	//Alarm? Horn?
 	var/beep_sound = 'modular_darkpack/modules/cars/sounds/beep.ogg'
 
+	//Gas
 	var/gas = CAR_TANK_MAX
 
 	/// If we provide extra debug information like path indicators
+	//neat. Don't need it.
 	var/debug_car = FALSE
 
-	var/grant_car_keys = FALSE
+	//Hm. auto keys?
+	var/grant_car_keys = TRUE
 
 	/// sound loop for the engine
+	//There you are.
 	var/datum/looping_sound/car_engine/engine_sound_loop
 
+	//cooldowns
 	COOLDOWN_DECLARE(impact_delay)
 	COOLDOWN_DECLARE(beep_cooldown)
 
 //Init
-/obj/darkpack_car/Initialize(mapload)
+//Hello World.
+/obj/motorcycle/Initialize(mapload)
 	. = ..()
 	engine_sound_loop = new(src)
 
-	trunk = new(src)
-	create_storage(storage_type = car_storage_type)
-	atom_storage.set_real_location(trunk)
+	//trunk = new(src)
+	//create_storage(storage_type = car_storage_type)
+	//atom_storage.set_real_location(trunk)
 
+	//Autokeys, nice.
 	if(access == "none")
 		grant_car_keys = TRUE
 		access = "[rand(1,9999999)]"
 		AddComponent(/datum/component/door_ownership)
-
-	// DARKPACK TODO - see about reimplementing this sprite for cars
-	/*
-	headlight_image = new(src)
-	headlight_image.icon = 'icons/effects/light_overlays/light_cone_car.dmi'
-	headlight_image.icon_state = "light"
-	headlight_image.pixel_x = -64
-	headlight_image.pixel_y = -64
-	headlight_image.layer = O_LIGHTING_VISUAL_LAYER
-	headlight_image.plane = O_LIGHTING_VISUAL_PLANE
-	headlight_image.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	headlight_image.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	//headlight_image.vis_flags = NONE
-	headlight_image.alpha = 110
-	*/
 
 	gas = rand(100, CAR_TANK_MAX)
 	last_pos["x"] = x
@@ -148,15 +192,15 @@
 	icon_state = "empty"
 
 //delete
-/obj/darkpack_car/Destroy()
+/obj/motorcycle/Destroy()
 	STOP_PROCESSING(SScarpool, src)
 	QDEL_NULL(engine_sound_loop)
-	QDEL_NULL(trunk)
+	//QDEL_NULL(trunk)
 	empty_car()
 	. = ..()
 
 //Alternate actions.
-/obj/darkpack_car/click_alt(mob/user)
+/obj/motorcycle/click_alt(mob/user)
 	var/list/radial_menu_options = list(
 		"Open Trunk" = icon('modular_darkpack/modules/cars/icons/car_actions.dmi', "baggage"),
 	)
@@ -192,7 +236,7 @@
 		to_chat(user, span_warning("You've failed to get [occupent] out of [src]."))
 
 //Interactions.
-/obj/darkpack_car/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/motorcycle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/gas_can))
 		return try_refuel(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/melee/vamp/tire))
@@ -203,7 +247,7 @@
 		return try_keys(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	return NONE
 
-/obj/darkpack_car/proc/try_refuel(mob/living/user, obj/item/gas_can/can_used)
+/obj/motorcycle/proc/try_refuel(mob/living/user, obj/item/gas_can/can_used)
 	if(can_used.stored_gasoline && gas < CAR_TANK_MAX && isturf(user.loc))
 		if(do_after(user, 5 SECONDS, src, interaction_key = DOAFTER_SOURCE_CAR))
 			var/gas_to_transfer = min(CAR_TANK_MAX-gas, min(CAR_TANK_MAX, max(1, can_used.stored_gasoline)))
@@ -212,7 +256,7 @@
 			to_chat(user, span_notice("You transfer [gas_to_transfer] fuel to [src]."))
 			playsound(loc, 'modular_darkpack/master_files/sounds/effects/gas_fill.ogg', 25, TRUE)
 
-/obj/darkpack_car/proc/try_repair(mob/living/user, obj/item/tool)
+/obj/motorcycle/proc/try_repair(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_notice("[src] is already fully repaired."))
 		return
@@ -237,7 +281,7 @@
 		color = "#ffffff"
 		return TRUE
 
-/obj/darkpack_car/proc/try_lockpick(mob/living/user, obj/item/tool)
+/obj/motorcycle/proc/try_lockpick(mob/living/user, obj/item/tool)
 	if(!locked)
 		to_chat(user, span_warning("The [src] is already unlocked."))
 		return
@@ -276,7 +320,7 @@
 		to_chat(user, span_warning("You've failed to open [src]'s lock."))
 		return
 
-/obj/darkpack_car/proc/try_keys(mob/living/user, obj/item/vamp/keys/key_used)
+/obj/motorcycle/proc/try_keys(mob/living/user, obj/item/vamp/keys/key_used)
 	if(key_used.accesslocks)
 		for(var/i in key_used.accesslocks)
 			if(i == access)
@@ -286,7 +330,7 @@
 				return TRUE
 
 //damage
-/obj/darkpack_car/attackby(obj/item/I, mob/living/user, params)
+/obj/motorcycle/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(I.force)
 		for(var/mob/living/L in src)
@@ -303,7 +347,7 @@
 			playsound(src, 'modular_darkpack/modules/cars/sounds/open.ogg', 50, TRUE)
 			locked = FALSE
 
-/obj/darkpack_car/attack_hand(mob/user)
+/obj/motorcycle/attack_hand(mob/user)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -315,14 +359,14 @@
 			throw_at(throw_target, rand(4, 6), 4, user)
 			return TRUE
 
-/obj/darkpack_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+/obj/motorcycle/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
 	for(var/mob/living/L in src)
 		if(prob(50))
 			L.apply_damage(P.damage, P.damage_type, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
 //Examine
-/obj/darkpack_car/examine(mob/user)
+/obj/motorcycle/examine(mob/user)
 	. = ..()
 	if(user.loc == src)
 		. += "<b>Gas</b>: [gas]/[CAR_TANK_MAX]"
@@ -347,7 +391,7 @@
 		for(var/mob/living/rider in src)
 			. += span_notice("* [rider]")
 
-/obj/darkpack_car/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/motorcycle/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(prob(50) && atom_integrity <= max_integrity/2)
 		stop_engine()
@@ -359,7 +403,7 @@
 			explosion(loc,0,1,3,4)
 
 //Break
-/obj/darkpack_car/atom_break(damage_flag)
+/obj/motorcycle/atom_break(damage_flag)
 	. = ..()
 	stop_engine()
 	set_light(0)
@@ -367,7 +411,7 @@
 	broken = TRUE
 
 //Lights!
-/obj/darkpack_car/proc/set_headlight_on(new_value)
+/obj/motorcycle/proc/set_headlight_on(new_value)
 	if(headlight_on == new_value)
 		return
 	. = headlight_on
@@ -380,7 +424,7 @@
 	set_light_on(headlight_on)
 
 //convert to "buckle"/ mount motorcyle
-/obj/darkpack_car/mouse_drop_receive(mob/living/dropped, mob/user, params)
+/obj/motorcycle/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	if(!isliving(dropped))
 		return
@@ -413,39 +457,39 @@
 	return
 
 //Enter
-/obj/darkpack_car/proc/driver_enter(mob/living/user)
+/obj/motorcycle/proc/driver_enter(mob/living/user)
 	if(driver)
 		return
 	driver = user
-	for(var/car_action in subtypesof(/datum/action/darkpack_car))
-		var/datum/action/darkpack_car/new_action = new car_action()
+	for(var/car_action in subtypesof(/datum/action/motorcycle))
+		var/datum/action/motorcycle/new_action = new car_action()
 		new_action.Grant(user)
 	enter_car(user)
 	return TRUE
 //Passenger
-/obj/darkpack_car/proc/passenger_enter(mob/living/user)
+/obj/motorcycle/proc/passenger_enter(mob/living/user)
 	if(passengers.len >= max_passengers)
 		return
 	passengers += user
-	var/datum/action/darkpack_car/exit_car/E = new()
+	var/datum/action/motorcycle/exit_car/E = new()
 	E.Grant(user)
 	enter_car(user)
 	return TRUE
 
 // Please only call via driver_enter or passanger_enter
-/obj/darkpack_car/proc/enter_car(mob/living/user)
+/obj/motorcycle/proc/enter_car(mob/living/user)
 	user.forceMove(src)
 	visible_message(span_notice("[user] enters [src]."), \
 		span_notice("You enter [src]."))
 	playsound(src, 'modular_darkpack/master_files/sounds/effects/door/door.ogg', 50, TRUE)
 
 //Dump out all living from the car
-/obj/darkpack_car/proc/empty_car()
+/obj/motorcycle/proc/empty_car()
 	for(var/mob/living/L in src)
 		empty_occupent(L)
 
 //Dump one guy out of the car.
-/obj/darkpack_car/proc/empty_occupent(mob/living/dumpe)
+/obj/motorcycle/proc/empty_occupent(mob/living/dumpe)
 	if(driver == dumpe)
 		driver = null
 	if(dumpe in passengers)
@@ -473,11 +517,11 @@
 		dumpe.client.pixel_x = 0
 		dumpe.client.pixel_y = 0
 	playsound(src, 'modular_darkpack/master_files/sounds/effects/door/door.ogg', 50, TRUE)
-	for(var/datum/action/darkpack_car/C in dumpe.actions)
+	for(var/datum/action/motorcycle/C in dumpe.actions)
 		qdel(C)
 
 //Crashing
-/obj/darkpack_car/Bump(atom/bumped_atom)
+/obj/motorcycle/Bump(atom/bumped_atom)
 	. = ..()
 	var/prev_speed = round(abs(speed_in_pixels)/4)
 	if(!prev_speed)
@@ -534,15 +578,15 @@
 	return
 
 //Movement, Bike will be way more simple.
-/obj/darkpack_car/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/motorcycle/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	last_pos["x"] = x
 	last_pos["y"] = y
 
-/obj/darkpack_car/process(seconds_per_tick)
+/obj/motorcycle/process(seconds_per_tick)
 	car_move()
 
-/obj/darkpack_car/proc/car_move()
+/obj/motorcycle/proc/car_move()
 	speed_in_pixels = max(speed_in_pixels, -64)
 	var/used_vector = movement_vector
 	var/used_speed = speed_in_pixels
@@ -623,7 +667,7 @@
 	update_last_pos(moved_x, moved_y)
 
 //dodge?
-/obj/darkpack_car/proc/handle_npc_dodge(turf/target, angle)
+/obj/motorcycle/proc/handle_npc_dodge(turf/target, angle)
 	for(var/turf/T in get_line(src, target))
 		var/list/unpassable = T.get_blocking_contents(FALSE, src)
 		if(!length(unpassable))
@@ -647,7 +691,7 @@
 
 //not needed?
 /// Moves the client cameras of living inside of the car.
-/obj/darkpack_car/proc/move_car_riders(moved_x, moved_y)
+/obj/motorcycle/proc/move_car_riders(moved_x, moved_y)
 	for(var/mob/living/rider in src)
 		if(rider.client)
 			rider.client.pixel_x = last_pos["x_frwd"]
@@ -657,7 +701,7 @@
 				pixel_y = last_pos["y_pix"] + moved_y * 2, \
 				SScarpool.wait, 1)
 
-/obj/darkpack_car/proc/update_last_pos(moved_x, moved_y)
+/obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
 	last_pos["x_frwd"] = last_pos["x_pix"] + moved_x * 2
 	last_pos["y_frwd"] = last_pos["y_pix"] + moved_y * 2
@@ -678,7 +722,7 @@
 	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
 	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
 
-/obj/darkpack_car/relaymove(mob/living/user, direction)
+/obj/motorcycle/relaymove(mob/living/user, direction)
 	if(user != driver)
 		return ..()
 	if(!COOLDOWN_FINISHED(src, impact_delay))
@@ -706,7 +750,7 @@
 		if(WEST)
 			controlling(0, -turn_speed)
 
-/obj/darkpack_car/proc/controlling(adjusting_speed, adjusting_turn)
+/obj/motorcycle/proc/controlling(adjusting_speed, adjusting_turn)
 	var/drift = clamp(driver.st_get_stat(STAT_DRIVE)/4, 0.25, 4)
 	var/adjust_true = adjusting_turn
 	if(speed_in_pixels != 0)
@@ -735,7 +779,7 @@
 				speed_in_pixels = max(0, speed_in_pixels+adjusting_speed*3)
 				movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true*drift)
 
-/obj/darkpack_car/proc/apply_vector_angle()
+/obj/motorcycle/proc/apply_vector_angle()
 	var/turn_state = round(SIMPLIFY_DEGREES(movement_vector + 22.5) / 45)
 	setDir(GLOB.modulo_angle_to_dir[turn_state + 1])
 	var/minus_angle = turn_state * 45
@@ -744,14 +788,14 @@
 	M.Turn(movement_vector - minus_angle)
 	transform = M
 
-/obj/darkpack_car/proc/start_engine()
+/obj/motorcycle/proc/start_engine()
 	if(on)
 		return
 	START_PROCESSING(SScarpool, src)
 	on = TRUE
 	engine_sound_loop.start()
 
-/obj/darkpack_car/proc/stop_engine()
+/obj/motorcycle/proc/stop_engine()
 	if(!on)
 		return
 	on = FALSE
@@ -920,39 +964,6 @@
 		to_chat(this_bike.driver, span_warning("The [this_bike]'s engine is off!"))
 		return
 	this_bike.handle_rev_sound()
-
-//Start Idle sound.
-/obj/vehicle/ridden/motorcycle/proc/play_idle_loop()
-	if(idle_looping) return
-	idle_looping = TRUE
-	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg', 100, FALSE, 5, 1.3, 0, 220)
-	addtimer(CALLBACK(src, /obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat), 2 SECONDS)
-
-/obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat()
-	if(!on || !idle_looping) return
-	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle.ogg', 100, FALSE, 5, 1.3, 0, 221)
-	addtimer(CALLBACK(src, /obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat), 2 SECONDS)
-
-/// Called when engine stops
-/obj/vehicle/ridden/motorcycle/proc/stop_idle_loop()
-	idle_looping = FALSE
-	var/sound/stop_idle = sound(null, repeat=0, channel=221)
-	hearers(src) << stop_idle
-	if(!on)
-		playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_kill.ogg', 100, FALSE, 5, 1.3, 0, 224)
-
-/obj/vehicle/ridden/motorcycle/proc/handle_rev_sound()
-	last_run_sound = world.time
-	stop_idle_loop()
-	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_rev.ogg', 100, TRUE, 10, 1.5, 0, 223)
-	addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 1 SECONDS)
-
-/obj/vehicle/ridden/motorcycle/proc/handle_run_sound()
-	if((world.time - last_run_sound) >= 4.5 SECONDS)
-		last_run_sound = world.time
-		stop_idle_loop()
-		playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_run.ogg', 100, TRUE, 10, 1.5, 0, 222)
-		addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 4.5 SECONDS)
 
 
 /obj/vehicle/ridden/motorcycle/baron

@@ -1,3 +1,4 @@
+/*
 /datum/component/riding/vehicle/motorcycle
 	vehicle_move_delay = 0.5
 	override_allow_spacemove = TRUE
@@ -14,3 +15,4 @@
 	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+*/
