@@ -8,7 +8,7 @@
 		return FALSE
 	if(!owner)
 		return FALSE
-	if(!istype(owner.loc, /obj/motorcycle))
+	if(!istype(owner.buckled, /obj/motorcycle))
 		return FALSE
 
 /datum/action/motorcycle/headlight
@@ -20,7 +20,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/motorcycle/owned_car = owner.loc
+	var/obj/motorcycle/owned_car = owner.buckled
 	owned_car.set_headlight_on(!owned_car.headlight_on)
 	to_chat(owner, span_notice("You toggle [owned_car]'s lights."))
 	playsound(owned_car, 'sound/items/weapons/magout.ogg', 40, TRUE)
@@ -34,7 +34,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/motorcycle/owned_car = owner.loc
+	var/obj/motorcycle/owned_car = owner.buckled
 	if(COOLDOWN_FINISHED(owned_car, beep_cooldown))
 		COOLDOWN_START(owned_car, beep_cooldown, 1 SECONDS)
 		playsound(owned_car.loc, owned_car.beep_sound, 60, FALSE)
@@ -48,7 +48,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/motorcycle/owned_car = owner.loc
+	var/obj/motorcycle/owned_car = owner.buckled
 	if(owned_car.stage < 3)
 		owned_car.stage = owned_car.stage+1
 	else
@@ -64,7 +64,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/motorcycle/vamp_car = owner.loc
+	var/obj/motorcycle/vamp_car = owner.buckled
 	var/datum/storage/trunk_datum = vamp_car.atom_storage
 	trunk_datum.set_locked(trunk_datum.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
 
@@ -91,7 +91,7 @@
 	if(!ISADVANCEDTOOLUSER(clicker))
 		return
 
-	var/obj/motorcycle/owned_car = owner.loc
+	var/obj/motorcycle/owned_car = owner.buckled
 	if(!owned_car.on)
 		if((owned_car.get_integrity() == owned_car.max_integrity) || (prob(100*(owned_car.get_integrity()/owned_car.max_integrity))))
 			owned_car.start_engine()
@@ -114,7 +114,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/motorcycle/owned_car = owner.loc
+	var/obj/motorcycle/owned_car = owner.buckled
 	if(owned_car.driver == owner)
 		owned_car.driver = null
 	if(owner in owned_car.passengers)

@@ -89,8 +89,10 @@
 	resistance_flags = UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	throwforce = 150
 
-	MAP_SWITCH(pixel_x = 0, pixel_x = -32)
-	MAP_SWITCH(pixel_y = 0, pixel_y = -32)
+	can_buckle = TRUE
+	//offset?
+	MAP_SWITCH(pixel_x = 0, pixel_x = 0)
+	MAP_SWITCH(pixel_y = 0, pixel_y = 0)
 
 	//glide?
 	glide_size = 96
@@ -424,7 +426,7 @@
 		return
 
 	if(driver && (length(passengers) >= max_passengers))
-		to_chat(dropped, span_warning("There's no space left for you in [src]."))
+		to_chat(dropped, span_warning("There's no space left for you on the [src]."))
 		return
 
 	var/list/radial_menu_options = list()
@@ -437,7 +439,7 @@
 		return
 
 	visible_message(span_notice("[dropped] begins entering [src]..."), \
-		span_notice("You begin entering [src]..."))
+		span_notice("You begin mounting [src]..."))
 	if(do_after(user, 1 SECONDS, dropped, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		if(pick == "Driver Seat" && driver_enter(dropped))
 			return
@@ -468,14 +470,19 @@
 
 // Please only call via driver_enter or passanger_enter
 /obj/motorcycle/proc/enter_car(mob/living/user)
-	user.forceMove(src)
-	visible_message(span_notice("[user] enters [src]."), \
-		span_notice("You enter [src]."))
+	user.forceMove(loc)
+	if (!buckle_mob(user))
+		to_chat(user, span_warning("You fail to mount the [src]."))
+		return
+	visible_message(span_notice("[user] mounts the [src]."), \
+		span_notice("You mounted the [src]."))
 	playsound(src, 'modular_darkpack/master_files/sounds/effects/door/door.ogg', 50, TRUE)
 
 //Dump out all living from the car
 /obj/motorcycle/proc/empty_car()
-	for(var/mob/living/L in src)
+	if(driver)
+		empty_occupent(driver)
+	for(var/mob/living/L in passengers)
 		empty_occupent(L)
 
 //Dump one guy out of the car.
@@ -485,6 +492,7 @@
 	if(dumpe in passengers)
 		passengers -= dumpe
 	dumpe.forceMove(loc)
+	unbuckle_mob(dumpe)
 
 	var/list/exit_side = list(
 		SIMPLIFY_DEGREES(movement_vector + 90),
@@ -680,19 +688,18 @@
 					if(prob(50))
 						NPC.realistic_say(pick(NPC.socialrole.car_dodged))
 
-//not needed? If the characters are still there... hm
-/// Moves the client cameras of living inside of the car.
-/*
+//Easier fix, just keep this, make the riders visible. Switching to driver and passengers rather than src.
 /obj/motorcycle/proc/move_car_riders(moved_x, moved_y)
-	for(var/mob/living/rider in src)
-		if(rider.client)
-			rider.client.pixel_x = last_pos["x_frwd"]
-			rider.client.pixel_y = last_pos["y_frwd"]
-			animate(rider.client, \
-				pixel_x = last_pos["x_pix"] + moved_x * 2, \
-				pixel_y = last_pos["y_pix"] + moved_y * 2, \
-				SScarpool.wait, 1)
-*/
+	if(driver.loc != src.loc)
+		driver.loc = src.loc
+	if(driver)
+		driver.pixel_x = last_pos["x_frwd"]
+		driver.pixel_y = last_pos["y_frwd"]
+		driver.dir = src.dir
+		animate(driver, \
+			pixel_x = last_pos["x_pix"] + moved_x * 2, \
+			pixel_y = last_pos["y_pix"] + moved_y * 2, \
+			SScarpool.wait, 1)
 
 /obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
