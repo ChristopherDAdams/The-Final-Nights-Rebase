@@ -7806,6 +7806,7 @@
 #include "modular_tfn\modules\loadout\code\categories\suit.dm"
 #include "modular_tfn\modules\motorcycle\code\motorcycle.dm"
 #include "modular_tfn\modules\motorcycle\code\motorcycle_actions.dm"
+#include "modular_tfn\modules\motorcycle\code\motorcycle_subtypes.dm"
 #include "modular_tfn\modules\motorcycle\code\datums\components\riding\riding_vehicle.dm"
 #include "modular_tfn\modules\powers\code\admin_discipline_editor.dm"
 #include "modular_tfn\modules\skillcheck\code\skillcheck.dm"

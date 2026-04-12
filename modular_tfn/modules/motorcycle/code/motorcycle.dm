@@ -1,9 +1,8 @@
-#define DOAFTER_SOURCE_CAR "doafter_car"
-#define CAR_TANK_MAX 1000
-
+#define DOAFTER_SOURCE_MOTORCYCLE "doafter_car"
+#define MOTORCYCLE_TANK_MAX 1000
 
 //Motorcycle Convert
-// Second Pass
+//Third Pass
 
 //Smoke
 // Commenting for now.
@@ -16,7 +15,7 @@
 	duration = 0.5 SECONDS
 */
 
-//What. Still what, probably needed.
+//Debugging path.
 /obj/effect/temp_visual/telegraphing/car
 	icon_state = "target_circle"
 	duration = 0.5 SECONDS
@@ -64,10 +63,6 @@
 		addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 4.5 SECONDS)
 */
 
-
-//Storage, Not needed.
-// Commenting for now.
-/*
 /obj/motorcycle_saddlebags
 	name = "car trunk"
 	desc = "How did this get out of the car."
@@ -78,11 +73,9 @@
 	max_specific_storage = WEIGHT_CLASS_HUGE
 	insert_on_attack = FALSE
 	click_alt_open = FALSE
-
 /datum/storage/motorcycle/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_locked(STORAGE_FULLY_LOCKED)
-*/
 
 //Core Datum
 /obj/motorcycle
@@ -109,7 +102,7 @@
 	light_power = 1
 	light_on = FALSE
 
-	//Movement will need refactored.
+	//Movement
 	var/movement_vector = 0 //0-359 degrees
 	var/speed_in_pixels = 0 // 16 pixels (turf is 2x2m) = 1 meter per 1 SECOND (process fire). Minus equals to reverse, max should be 444
 	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0, "x_frwd" = 0, "y_frwd" = 0)
@@ -138,11 +131,8 @@
 	var/lockpick_difficulty = 6
 	var/access = "none"
 
-	//Fix this for saddle bags.
-	/*
-	var/car_storage_type = /datum/storage/car
+	var/car_storage_type = /datum/storage/motorcycle
 	var/obj/car_trunk/trunk
-	*/
 
 	//Destroyed.
 	var/exploded = FALSE
@@ -150,7 +140,7 @@
 	var/beep_sound = 'modular_darkpack/modules/cars/sounds/beep.ogg'
 
 	//Gas
-	var/gas = CAR_TANK_MAX
+	var/gas = MOTORCYCLE_TANK_MAX
 
 	/// If we provide extra debug information like path indicators
 	//neat. Don't need it.
@@ -173,9 +163,9 @@
 	. = ..()
 	engine_sound_loop = new(src)
 
-	//trunk = new(src)
-	//create_storage(storage_type = car_storage_type)
-	//atom_storage.set_real_location(trunk)
+	trunk = new(src)
+	create_storage(storage_type = car_storage_type)
+	atom_storage.set_real_location(trunk)
 
 	//Autokeys, nice.
 	if(access == "none")
@@ -183,7 +173,7 @@
 		access = "[rand(1,9999999)]"
 		AddComponent(/datum/component/door_ownership)
 
-	gas = rand(100, CAR_TANK_MAX)
+	gas = rand(100, MOTORCYCLE_TANK_MAX)
 	last_pos["x"] = x
 	last_pos["y"] = y
 	movement_vector = dir2angle(dir)
@@ -195,7 +185,7 @@
 /obj/motorcycle/Destroy()
 	STOP_PROCESSING(SScarpool, src)
 	QDEL_NULL(engine_sound_loop)
-	//QDEL_NULL(trunk)
+	QDEL_NULL(trunk)
 	empty_car()
 	. = ..()
 
@@ -227,7 +217,7 @@
 
 	user.visible_message(span_warning("[user] begins pulling someone out of [src]!"), \
 		span_warning("You begin pulling [occupent] out of [src]..."))
-	if(do_after(user, 5 SECONDS, src, interaction_key = DOAFTER_SOURCE_CAR))
+	if(do_after(user, 5 SECONDS, src, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		user.visible_message(span_warning("[user] has managed to get [occupent] out of [src]."), \
 			span_warning("You've managed to get [occupent] out of [src]."))
 		empty_occupent(occupent)
@@ -248,11 +238,11 @@
 	return NONE
 
 /obj/motorcycle/proc/try_refuel(mob/living/user, obj/item/gas_can/can_used)
-	if(can_used.stored_gasoline && gas < CAR_TANK_MAX && isturf(user.loc))
-		if(do_after(user, 5 SECONDS, src, interaction_key = DOAFTER_SOURCE_CAR))
-			var/gas_to_transfer = min(CAR_TANK_MAX-gas, min(CAR_TANK_MAX, max(1, can_used.stored_gasoline)))
+	if(can_used.stored_gasoline && gas < MOTORCYCLE_TANK_MAX && isturf(user.loc))
+		if(do_after(user, 5 SECONDS, src, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
+			var/gas_to_transfer = min(MOTORCYCLE_TANK_MAX-gas, min(MOTORCYCLE_TANK_MAX, max(1, can_used.stored_gasoline)))
 			can_used.stored_gasoline = max(0, can_used.stored_gasoline-gas_to_transfer)
-			gas = min(CAR_TANK_MAX, gas+gas_to_transfer)
+			gas = min(MOTORCYCLE_TANK_MAX, gas+gas_to_transfer)
 			to_chat(user, span_notice("You transfer [gas_to_transfer] fuel to [src]."))
 			playsound(loc, 'modular_darkpack/master_files/sounds/effects/gas_fill.ogg', 25, TRUE)
 
@@ -266,7 +256,7 @@
 
 	user.visible_message(span_notice("[user] begins repairing [src]..."), \
 		span_notice("You begin repairing [src]. Stop at any time to only partially repair it."))
-	if(do_after(user, time_to_repair SECONDS, src, interaction_key = DOAFTER_SOURCE_CAR))
+	if(do_after(user, time_to_repair SECONDS, src, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		atom_integrity = max_integrity
 		playsound(src, 'modular_darkpack/master_files/sounds/effects/repair.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] repairs [src]."), \
@@ -291,7 +281,7 @@
 	var/total_lockpicking = user.st_get_stat(STAT_LARCENY)
 	if(CONFIG_GET(flag/punishing_zero_dots) && total_lockpicking < 1)
 		to_chat(user, span_warning("How do I do this...?"))
-	if(do_after(user, 1 TURNS, src, interaction_key = DOAFTER_SOURCE_CAR))
+	if(do_after(user, 1 TURNS, src, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		if(!locked)
 			return
 		var/datum/storyteller_roll/lockpick/our_roll = new()
@@ -369,7 +359,7 @@
 /obj/motorcycle/examine(mob/user)
 	. = ..()
 	if(user.loc == src)
-		. += "<b>Gas</b>: [gas]/[CAR_TANK_MAX]"
+		. += "<b>Gas</b>: [gas]/[MOTORCYCLE_TANK_MAX]"
 
 	if(broken)
 		. += span_notice("It appears to be broken.")
@@ -423,7 +413,7 @@
 
 	set_light_on(headlight_on)
 
-//convert to "buckle"/ mount motorcyle
+//Convert
 /obj/motorcycle/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	if(!isliving(dropped))
@@ -448,7 +438,7 @@
 
 	visible_message(span_notice("[dropped] begins entering [src]..."), \
 		span_notice("You begin entering [src]..."))
-	if(do_after(user, 1 SECONDS, dropped, interaction_key = DOAFTER_SOURCE_CAR))
+	if(do_after(user, 1 SECONDS, dropped, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		if(pick == "Driver Seat" && driver_enter(dropped))
 			return
 		else if(pick == "Passanger Seat" && passenger_enter(dropped))
@@ -577,7 +567,7 @@
 	take_damage(dam)
 	return
 
-//Movement, Bike will be way more simple.
+//Movement
 /obj/motorcycle/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	last_pos["x"] = x
@@ -601,8 +591,9 @@
 			return PROCESS_KILL
 
 	forceMove(locate(last_pos["x"], last_pos["y"], z))
-	if(on)
-		new /obj/effect/temp_visual/car(loc)
+	//if(on)
+		//smoke
+		//new /obj/effect/temp_visual/car(loc)
 
 	pixel_x = last_pos["x_pix"]
 	pixel_y = last_pos["y_pix"]
@@ -666,7 +657,7 @@
 	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
 	update_last_pos(moved_x, moved_y)
 
-//dodge?
+//Neat.
 /obj/motorcycle/proc/handle_npc_dodge(turf/target, angle)
 	for(var/turf/T in get_line(src, target))
 		var/list/unpassable = T.get_blocking_contents(FALSE, src)
@@ -689,8 +680,9 @@
 					if(prob(50))
 						NPC.realistic_say(pick(NPC.socialrole.car_dodged))
 
-//not needed?
+//not needed? If the characters are still there... hm
 /// Moves the client cameras of living inside of the car.
+/*
 /obj/motorcycle/proc/move_car_riders(moved_x, moved_y)
 	for(var/mob/living/rider in src)
 		if(rider.client)
@@ -700,6 +692,7 @@
 				pixel_x = last_pos["x_pix"] + moved_x * 2, \
 				pixel_y = last_pos["y_pix"] + moved_y * 2, \
 				SScarpool.wait, 1)
+*/
 
 /obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
@@ -721,6 +714,7 @@
 	// Step 4: Update absolute turf coordinates with clamping
 	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
 	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
+
 
 /obj/motorcycle/relaymove(mob/living/user, direction)
 	if(user != driver)
@@ -750,6 +744,8 @@
 		if(WEST)
 			controlling(0, -turn_speed)
 
+
+//Controls
 /obj/motorcycle/proc/controlling(adjusting_speed, adjusting_turn)
 	var/drift = clamp(driver.st_get_stat(STAT_DRIVE)/4, 0.25, 4)
 	var/adjust_true = adjusting_turn
@@ -788,6 +784,8 @@
 	M.Turn(movement_vector - minus_angle)
 	transform = M
 
+
+
 /obj/motorcycle/proc/start_engine()
 	if(on)
 		return
@@ -801,12 +799,8 @@
 	on = FALSE
 	engine_sound_loop.stop()
 
-#undef DOAFTER_SOURCE_CAR
-#undef CAR_TANK_MAX
-
-
-//Time for bed.
-
+#undef DOAFTER_SOURCE_MOTORCYCLE
+#undef MOTORCYCLE_TANK_MAX
 
 
 
