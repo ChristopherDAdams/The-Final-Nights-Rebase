@@ -84,13 +84,12 @@
 	icon_state = "motorcycle_basic"
 	icon = 'modular_tfn/modules/motorcycle/icons/obj/motorcycle.dmi'
 	anchored = TRUE
-	layer = CAR_LAYER
+	layer = BELOW_MOB_LAYER
 	density = TRUE
 	resistance_flags = UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	throwforce = 150
 
 	can_buckle = TRUE
-	//offset?
 	MAP_SWITCH(pixel_x = 0, pixel_x = 0)
 	MAP_SWITCH(pixel_y = 0, pixel_y = 0)
 
@@ -109,7 +108,6 @@
 	var/speed_in_pixels = 0 // 16 pixels (turf is 2x2m) = 1 meter per 1 SECOND (process fire). Minus equals to reverse, max should be 444
 	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0, "x_frwd" = 0, "y_frwd" = 0)
 
-	//"Health"
 	max_integrity = 400
 	integrity_failure = 0.25
 	var/broken = FALSE
@@ -179,8 +177,8 @@
 	last_pos["x"] = x
 	last_pos["y"] = y
 	movement_vector = dir2angle(dir)
-
-	add_overlay(image(icon = src.icon, icon_state = src.icon_state, pixel_x = -32, pixel_y = -32))
+	//centers the bike sprite on the tile.
+	add_overlay(image(icon = src.icon, icon_state = src.icon_state, pixel_x = -20, pixel_y = 8))
 	icon_state = "empty"
 
 //delete
@@ -599,9 +597,6 @@
 			return PROCESS_KILL
 
 	forceMove(locate(last_pos["x"], last_pos["y"], z))
-	//if(on)
-		//smoke
-		//new /obj/effect/temp_visual/car(loc)
 
 	pixel_x = last_pos["x_pix"]
 	pixel_y = last_pos["y_pix"]
@@ -688,18 +683,20 @@
 					if(prob(50))
 						NPC.realistic_say(pick(NPC.socialrole.car_dodged))
 
-//Easier fix, just keep this, make the riders visible. Switching to driver and passengers rather than src.
+//This controls the directional offset.
 /obj/motorcycle/proc/move_car_riders(moved_x, moved_y)
-	if(driver.loc != src.loc)
-		driver.loc = src.loc
+	//this is the base sprite translations, minus the camera effect.
 	if(driver)
-		driver.pixel_x = last_pos["x_frwd"]
-		driver.pixel_y = last_pos["y_frwd"]
+		driver.pixel_x = last_pos["x_pix"]
+		driver.pixel_y = last_pos["y_pix"]
 		driver.dir = src.dir
+		if(driver.loc != src.loc)
+			driver.loc = src.loc
 		animate(driver, \
-			pixel_x = last_pos["x_pix"] + moved_x * 2, \
-			pixel_y = last_pos["y_pix"] + moved_y * 2, \
+			pixel_x = last_pos["x_pix"] + moved_x, \
+			pixel_y = last_pos["y_pix"] + moved_y, \
 			SScarpool.wait, 1)
+
 
 /obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
@@ -735,20 +732,20 @@
 	var/turn_speed = min(abs(speed_in_pixels) / 10, 3)
 	switch(direction)
 		if(NORTH)
+			driver_offset_x = 0
+			driver_offset_y = 16
 			controlling(1, 0)
-		if(NORTHEAST)
-			controlling(1, turn_speed)
-		if(NORTHWEST)
-			controlling(1, -turn_speed)
 		if(SOUTH)
+			driver_offset_x = 0
+			driver_offset_y = 32
 			controlling(-1, 0)
-		if(SOUTHEAST)
-			controlling(-1, turn_speed)
-		if(SOUTHWEST)
-			controlling(-1, -turn_speed)
 		if(EAST)
+			driver_offset_x = 16
+			driver_offset_y = 8
 			controlling(0, turn_speed)
 		if(WEST)
+			driver_offset_x = -16
+			driver_offset_y = 8
 			controlling(0, -turn_speed)
 
 

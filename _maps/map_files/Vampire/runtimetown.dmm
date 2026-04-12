@@ -1656,6 +1656,10 @@
 /obj/structure/platform/lowwall/market,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
+"Ee" = (
+/obj/motorcycle/anarch,
+/turf/open/misc/beach/vamp,
+/area/vtm/outside/pacificheights)
 "Ef" = (
 /turf/closed/wall/vampwall/rich/old,
 /area/vtm/interior/sewer)
@@ -4250,7 +4254,7 @@ ZU
 je
 NR
 kb
-NR
+Ee
 cj
 ik
 VQ
