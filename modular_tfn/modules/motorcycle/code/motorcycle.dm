@@ -2,70 +2,32 @@
 #define MOTORCYCLE_TANK_MAX 1000
 
 //Motorcycle Convert
-//Third Pass
+//Fourth Pass.
 
-//Smoke
-// Commenting for now.
-/*
-/obj/effect/temp_visual/car
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "smoke"
-	layer = BELOW_MOB_LAYER
-	light_range = 1
-	duration = 0.5 SECONDS
-*/
-
-//Debugging path.
 /obj/effect/temp_visual/telegraphing/car
 	icon_state = "target_circle"
 	duration = 0.5 SECONDS
 
-//Sound. Motorcycle! I'll make it fancy later.
+//Sound. Might add more after basics are in.
 /datum/looping_sound/motorcycle_engine
 	start_sound = 'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg'
 	start_length = 2 SECONDS
 	mid_sounds = list('modular_tfn/modules/motorcycle/sound/bike_idle.ogg')
 	mid_length = 1.1 SECONDS
 	end_sound = 'modular_tfn/modules/motorcycle/sound/bike_idle_kill.ogg'
-
 /*
-//Start Idle sound.
-/obj/vehicle/ridden/motorcycle/proc/play_idle_loop()
-	if(idle_looping) return
-	idle_looping = TRUE
-	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg', 100, FALSE, 5, 1.3, 0, 220)
-	addtimer(CALLBACK(src, /obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat), 2 SECONDS)
-
-/obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat()
-	if(!on || !idle_looping) return
-	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle.ogg', 100, FALSE, 5, 1.3, 0, 221)
-	addtimer(CALLBACK(src, /obj/vehicle/ridden/motorcycle/proc/play_idle_loop_repeat), 2 SECONDS)
-
-/// Called when engine stops
-/obj/vehicle/ridden/motorcycle/proc/stop_idle_loop()
-	idle_looping = FALSE
-	var/sound/stop_idle = sound(null, repeat=0, channel=221)
-	hearers(src) << stop_idle
-	if(!on)
-		playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_kill.ogg', 100, FALSE, 5, 1.3, 0, 224)
-
-/obj/vehicle/ridden/motorcycle/proc/handle_rev_sound()
-	last_run_sound = world.time
-	stop_idle_loop()
-	playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_rev.ogg', 100, TRUE, 10, 1.5, 0, 223)
-	addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 1 SECONDS)
-
-/obj/vehicle/ridden/motorcycle/proc/handle_run_sound()
-	if((world.time - last_run_sound) >= 4.5 SECONDS)
-		last_run_sound = world.time
-		stop_idle_loop()
-		playsound(src, 'modular_tfn/modules/motorcycle/sound/bike_idle_run.ogg', 100, TRUE, 10, 1.5, 0, 222)
-		addtimer(CALLBACK(src, PROC_REF(play_idle_loop)), 4.5 SECONDS)
+//Bike Sounds.
+'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg'
+'modular_tfn/modules/motorcycle/sound/bike_idle.ogg'
+'modular_tfn/modules/motorcycle/sound/bike_idle_kill.ogg'
+'modular_tfn/modules/motorcycle/sound/bike_idle_rev.ogg'
+'modular_tfn/modules/motorcycle/sound/bike_idle_run.ogg'
 */
 
+//Still needs tweaking.
 /obj/motorcycle_saddlebags
-	name = "car trunk"
-	desc = "How did this get out of the car."
+	name = "motorcycle saddlebags"
+	desc = "How did this get out."
 /datum/storage/motorcycle
 	animated = FALSE
 	max_slots = 40
@@ -77,7 +39,6 @@
 	. = ..()
 	set_locked(STORAGE_FULLY_LOCKED)
 
-//Core Datum
 /obj/motorcycle
 	name = "motorcycle"
 	desc = "A motorcycle; a beautiful and dangerous deathtrap on two wheels. Not meant for faint of heart or cowardly."
@@ -89,7 +50,6 @@
 	resistance_flags = UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	throwforce = 150
 
-	can_buckle = TRUE
 	MAP_SWITCH(pixel_x = 0, pixel_x = 0)
 	MAP_SWITCH(pixel_y = 0, pixel_y = 0)
 
@@ -120,7 +80,9 @@
 	var/mob/living/driver
 	var/list/passengers = list()
 	var/max_passengers = 1
-
+	//Needs fixing to only unbuckle when the motorcycle action is pressed, or in a crash, etc.
+	//used to stop movement controls and keep the character "live" instead of an uninteractable sprite
+	can_buckle = TRUE
 
 	var/speed = 1	//Future
 	var/stage = 1
@@ -143,22 +105,19 @@
 	var/gas = MOTORCYCLE_TANK_MAX
 
 	/// If we provide extra debug information like path indicators
-	//neat. Don't need it.
-	var/debug_car = FALSE
+	//neat. Don't need it. (Needed it.)
+	var/debug_car = TRUE
 
-	//Hm. auto keys?
-	var/grant_car_keys = TRUE
+	//access now handled in motorcycle_subtypes
+	var/grant_car_keys = FALSE
 
 	/// sound loop for the engine
-	//There you are.
 	var/datum/looping_sound/car_engine/engine_sound_loop
 
 	//cooldowns
 	COOLDOWN_DECLARE(impact_delay)
 	COOLDOWN_DECLARE(beep_cooldown)
 
-//Init
-//Hello World.
 /obj/motorcycle/Initialize(mapload)
 	. = ..()
 	engine_sound_loop = new(src)
@@ -167,7 +126,6 @@
 	create_storage(storage_type = car_storage_type)
 	atom_storage.set_real_location(trunk)
 
-	//Autokeys, nice.
 	if(access == "none")
 		grant_car_keys = TRUE
 		access = "[rand(1,9999999)]"
@@ -178,10 +136,9 @@
 	last_pos["y"] = y
 	movement_vector = dir2angle(dir)
 	//centers the bike sprite on the tile.
-	add_overlay(image(icon = src.icon, icon_state = src.icon_state, pixel_x = -20, pixel_y = 8))
-	icon_state = "empty"
+	pixel_x = -20
+	pixel_y = 8
 
-//delete
 /obj/motorcycle/Destroy()
 	STOP_PROCESSING(SScarpool, src)
 	QDEL_NULL(engine_sound_loop)
@@ -377,7 +334,7 @@
 	if(locked)
 		. += span_warning("It's locked.")
 	if(driver || length(passengers))
-		. += span_notice("\nYou see the following people inside:")
+		. += span_notice("\nYou see the following people on the Motorcycle:")
 		for(var/mob/living/rider in src)
 			. += span_notice("* [rider]")
 
@@ -697,7 +654,6 @@
 			pixel_y = last_pos["y_pix"] + moved_y, \
 			SScarpool.wait, 1)
 
-
 /obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
 	last_pos["x_frwd"] = last_pos["x_pix"] + moved_x * 2
@@ -729,23 +685,24 @@
 		return
 	if(!ISADVANCEDTOOLUSER(user))
 		return
-	var/turn_speed = min(abs(speed_in_pixels) / 10, 3)
+	//faster turning speed than cars.
+	var/turn_speed = min(abs(speed_in_pixels) / 5, 5)
 	switch(direction)
 		if(NORTH)
-			driver_offset_x = 0
-			driver_offset_y = 16
 			controlling(1, 0)
+		if(NORTHEAST)
+			controlling(1, turn_speed)
+		if(NORTHWEST)
+			controlling(1, -turn_speed)
 		if(SOUTH)
-			driver_offset_x = 0
-			driver_offset_y = 32
 			controlling(-1, 0)
+		if(SOUTHEAST)
+			controlling(-1, turn_speed)
+		if(SOUTHWEST)
+			controlling(-1, -turn_speed)
 		if(EAST)
-			driver_offset_x = 16
-			driver_offset_y = 8
 			controlling(0, turn_speed)
 		if(WEST)
-			driver_offset_x = -16
-			driver_offset_y = 8
 			controlling(0, -turn_speed)
 
 
@@ -779,17 +736,29 @@
 				speed_in_pixels = max(0, speed_in_pixels+adjusting_speed*3)
 				movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true*drift)
 
+// Limited to 90 degree icon directions.
 /obj/motorcycle/proc/apply_vector_angle()
-	var/turn_state = round(SIMPLIFY_DEGREES(movement_vector + 22.5) / 45)
-	setDir(GLOB.modulo_angle_to_dir[turn_state + 1])
-	var/minus_angle = turn_state * 45
-
+	var/turn_state = round(SIMPLIFY_DEGREES(movement_vector + 45) / 90)
+	setDir(angle2dir_cardinal(movement_vector))
+	var/minus_angle = turn_state * 90
 	var/matrix/M = matrix()
 	M.Turn(movement_vector - minus_angle)
 	transform = M
 
+//(jurryrigged fix) ripped from type2type.dm, for above. Can i access above this somehow without this proc?
+/obj/motorcycle/proc/angle2dir_cardinal(degree)
+	degree = SIMPLIFY_DEGREES(degree)
+	switch(round(degree, 0.1))
+		if(315.5 to 360, 0 to 45.5)
+			return NORTH
+		if(45.6 to 135.5)
+			return EAST
+		if(135.6 to 225.5)
+			return SOUTH
+		if(225.6 to 315.5)
+			return WEST
 
-
+//Fine
 /obj/motorcycle/proc/start_engine()
 	if(on)
 		return
@@ -805,365 +774,3 @@
 
 #undef DOAFTER_SOURCE_MOTORCYCLE
 #undef MOTORCYCLE_TANK_MAX
-
-
-
-/* Old Code
-/obj/vehicle/ridden/motorcycle
-	name = "Motorcycle"
-	desc = "You see a motorcycle; a beautiful and dangerous deathtrap on two wheels. An engineering masterpiece born of equal parts bravery, foolish pride, and a raw desire for thrill. Not meant for faint of heart or cowardly."
-	icon = 'modular_tfn/modules/motorcycle/icons/obj/motorcycle.dmi'
-	icon_state = "motorcycle_basic"
-	layer = LYING_MOB_LAYER
-	var/overlay_state = "motorcycle_overlay"
-	var/mutable_appearance/overlay
-
-	//Almost all of this is taken from vamp/car.dm, and speedbike.dm, and modified to fit a motorcycle.
-	var/mob/living/carbon/human/driver
-
-	var/on = FALSE
-	var/idle_looping = FALSE
-	var/gas = 500
-	var/access = "anarch"
-	var/locked = TRUE
-
-	var/health = 100
-	var/maxhealth = 100
-	var/repairing = FALSE
-	var/exploded = FALSE
-
-	//car alarm.
-	var/last_beep = 0
-	var/last_run_sound = 0
-
-	var/move_threshold = 10
-	var/move_count = 0
-	//Actions
-	var/datum/action/motorcycle/start_engine/start_eng
-	var/datum/action/motorcycle/rev_engine/rev_eng
-
-/obj/vehicle/ridden/motorcycle/Initialize()
-	. = ..()
-	//Handles the overlay sprites.
-	overlay = mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
-	add_overlay(overlay)
-	//Basically makes the motorcycle a fancy janitor cart.
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/motorcycle)
-
-	//Actions: Gives the motorcycle it's actions to start and rev the engine.
-	start_eng = new /datum/action/motorcycle/start_engine
-	start_eng.this_bike = src
-	rev_eng = new /datum/action/motorcycle/rev_engine
-	rev_eng.this_bike = src
-
-//Mouse Drop Buckling Override:
-/obj/vehicle/ridden/motorcycle/MouseDrop_T(mob/living/carbon/human/new_mounter, atom/user)
-	. = ..()
-	if(!istype(new_mounter, /mob/living/carbon/human))
-		to_chat(user, span_warning("You can't drive this thing, but you are on it, somehow."))
-		return FALSE
-	if(driver)
-		to_chat(new_mounter, span_warning("There's no room for you on the [src]."))
-		return FALSE
-	if(locked)
-		if(on)
-			to_chat(new_mounter, span_warning("The [src]'s front wheel is locked, but the engine is running! Rev it! I'm sure no one will mind! "))
-			return
-		to_chat(new_mounter, span_warning("The [src]'s front wheel is locked, it has a very comfy seat though. "))
-		return
-	to_chat(span_notice("[new_mounter] gets on the [src]."))
-	to_chat(new_mounter, span_notice("You get on the [src]."))
-	if(do_mob(user, new_mounter, 1 SECONDS))
-		if(!driver)
-			driver = new_mounter
-			rev_eng.Grant(driver)
-			if(!locked)
-				start_eng.Grant(driver)
-		visible_message(span_notice("[src] gets on the [src]."))
-		span_notice("You get on the [src], and put the key your key in the slot.")
-		return TRUE
-	else
-		to_chat(src, span_warning("You fail to get on the [src]."))
-		return FALSE
-
-//Dismount
-/obj/vehicle/ridden/motorcycle/user_unbuckle_mob(mob/living/M, mob/user)
-	. = ..()
-	if(. && !has_buckled_mobs())
-		driver = null
-		start_eng.Remove(M)
-		rev_eng.Remove(M)
-
-//Movement trail and sound.
-/obj/vehicle/ridden/motorcycle/Move(newloc,move_dir)
-	if(!driver)
-		return FALSE
-	if(!on || gas <= 0 || health <= 0) //If the bike is off, or out of gas, or broken, don't move.
-		if(on && gas <= 0)
-			to_chat(driver, span_warning("The [src] sputters and dies; it's out of gas! "))
-			on = FALSE
-			stop_idle_loop()
-		if(on && health <= 5)
-			to_chat(driver, span_warning("The [src] shudders and dies; it's too damaged to run! "))
-			on = FALSE
-			stop_idle_loop()
-		return FALSE
-	move_count++
-	gas = max(0, gas-0.25)
-	if(has_buckled_mobs() && move_count >= move_threshold)
-		handle_run_sound()
-		move_count = 0
-	return ..()
-
-//Actions:
-//Starts the motor.
-////SOUNDS////
-//Start- 220
-//Idle - 221
-//Run - 222
-//Rev - 223
-//Kill - 224
-
-/datum/action/motorcycle/start_engine
-	name = "Start/Kill the Engine"
-	desc = "Starts or Kills the Engine."
-	button_icon_state = "keys"
-	var/obj/vehicle/ridden/motorcycle/this_bike
-
-/datum/action/motorcycle/start_engine/Trigger(trigger_flags)
-	. = ..()
-	if(this_bike.on == FALSE)
-		if(this_bike.gas <= 0)
-			to_chat(this_bike.driver, span_warning("The [this_bike] is out of gas!"))
-			return
-		if(this_bike.health <= 10)
-			to_chat(this_bike.driver,span_warning("The [this_bike] is too damaged to start!"))
-			return
-		this_bike.on = TRUE
-		to_chat(this_bike.driver, span_notice("You start the [this_bike]'s engine."))
-		this_bike.play_idle_loop()
-		return
-	else if(this_bike.on == TRUE)
-		this_bike.on = FALSE
-		to_chat(this_bike.driver, span_notice("You turn off the [this_bike]'s engine."))
-		this_bike.stop_idle_loop()
-		return
-
-//Rev motor action.
-/datum/action/motorcycle/rev_engine
-	name = "Rev Engine"
-	desc = "Revs the Engine."
-	button_icon_state = "stage"
-	var/obj/vehicle/ridden/motorcycle/this_bike
-
-/datum/action/motorcycle/rev_engine/Trigger(trigger_flags)
-	. = ..()
-	if(!this_bike.on)
-		to_chat(this_bike.driver, span_warning("The [this_bike]'s engine is off!"))
-		return
-	this_bike.handle_rev_sound()
-
-
-/obj/vehicle/ridden/motorcycle/baron
-	icon_state = "motorcycle_baron"
-	overlay_state = "motorcycle_baron_overlay"
-	access = "baron"
-
-//Keys/Lockpicking/Repair/Various: All from car.dm, very slightly modified.
-/obj/vehicle/ridden/motorcycle/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/gas_can)) //gas
-		var/obj/item/gas_can/G = I
-		if(G.stored_gasoline && gas < 500 && isturf(user.loc))
-			var/gas_to_transfer = min(500-gas, min(100, max(1, G.stored_gasoline)))
-			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
-			gas = min(1000, gas+gas_to_transfer)
-			playsound(loc, 'code/modules/wod13/sounds/gas_fill.ogg', 25, TRUE)
-			to_chat(user, span_notice("You transfer [gas_to_transfer] fuel to [src]."))
-		return
-	if(istype(I, /obj/item/vamp/keys)) //keys/lockpicking
-		var/obj/item/vamp/keys/K = I
-		if(istype(I, /obj/item/vamp/keys/hack))
-			if(!repairing)
-				repairing = TRUE
-				if(do_mob(user, src, 20 SECONDS))
-					var/roll = SSroll.storyteller_roll(
-						dice = (user.st_get_stat(STAT_DEXTERITY) + (user.st_get_stat(STAT_STREETWISE))),
-						difficulty = 8,
-						mobs_to_show_output = list(user))
-					//(<= 1, break lockpick) (2-9, trigger car alarm), (>= 10, unlock car)
-					if (roll == ROLL_BOTCH)
-						to_chat(user, span_warning("Your lockpick broke! "))
-						qdel(K)
-						repairing = FALSE
-						return
-					else if (roll == ROLL_SUCCESS)
-						locked = FALSE
-						repairing = FALSE
-						to_chat(user, span_notice("You've managed to open [src]'s lock. "))
-						playsound(src, 'code/modules/wod13/sounds/open.ogg', 50, TRUE)
-					else
-						to_chat(user, span_warning("You've failed to open [src]'s lock. "))
-						playsound(src, 'code/modules/wod13/sounds/signal.ogg', 50, FALSE)
-						for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
-							if(P)
-								P.Aggro(user)
-						repairing = FALSE
-						return //Don't penalize vampire humanity if they failed.
-					if(initial(access) == "none") //Stealing a car with no keys assigned to it is basically robbing a random person and not an organization
-						if(ishuman(user))
-							var/mob/living/carbon/human/H = user
-							SEND_SIGNAL(H, COMSIG_PATH_HIT, PATH_SCORE_DOWN, 6)
-						return
-				else
-					to_chat(user, span_warning("You've failed to open [src]'s lock. "))
-					repairing = FALSE
-					return
-			return
-		if(K.accesslocks) //If the keys have any access
-			for(var/i in K.accesslocks)
-				if(i == access)
-					to_chat(user, span_notice("You [locked ? "open" : "close"] [src]'s lock. "))
-					playsound(src, 'code/modules/wod13/sounds/open.ogg', 50, TRUE)
-					locked = !locked
-					return
-		return
-	if(istype(I, /obj/item/melee/vampirearms/tire))
-		if(exploded)
-			to_chat(user, span_warning("The [src] is wrecked beyond repair. "))
-			return
-		if(!repairing)
-			if(health >= maxhealth)
-				to_chat(user, span_notice("[src] is already fully repaired. "))
-				return
-			repairing = TRUE
-			var time_to_repair = (maxhealth - health) / 4 //Repair 4hp for every second spent repairing
-			var start_time = world.time
-			user.visible_message(span_notice("[user] begins repairing [src]... "), \
-				span_notice("You begin repairing [src]. Stop at any time to only partially repair it. "))
-			if(do_mob(user, src, time_to_repair SECONDS))
-				health = maxhealth
-				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
-				user.visible_message(span_notice("[user] repairs [src]. "), \
-					span_notice("You finish repairing all the dents on [src]. "))
-				color = "#ffffff"
-				repairing = FALSE
-				return
-			else
-				get_damage((world.time - start_time) * -2 / 5) //partial repair
-				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
-				user.visible_message(span_notice("[user] repairs [src]. "), \
-					span_notice("You repair some of the dents on [src]. "))
-				color = "#ffffff"
-				repairing = FALSE
-				return
-		return
-
-	else
-		if(I.force)
-			get_damage(round(I.force/2))
-			for(var/mob/living/L in src)
-				if(prob(50))
-					L.apply_damage(round(I.force/2), I.damtype, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
-
-			if(!driver && last_beep+70 < world.time && locked)
-				last_beep = world.time
-				playsound(src, 'code/modules/wod13/sounds/signal.ogg', 50, FALSE)
-				for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
-					P.Aggro(user)
-
-			if(prob(10) && locked)
-				playsound(src, 'code/modules/wod13/sounds/open.ogg', 50, TRUE)
-				locked = FALSE
-
-	..()
-
-
-//crashing into stuff, direct rip.
-/obj/vehicle/ridden/motorcycle/Bump(atom/A)
-	if(!A)
-		return
-	if(istype(A, /mob/living))
-		var/mob/living/hit_mob = A
-		switch(hit_mob.mob_size)
-			if(MOB_SIZE_HUGE) 	//gangrel warforms, werewolves, bears, ppl with fortitude
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 75, TRUE)
-				hit_mob.Paralyze(1 SECONDS)
-			if(MOB_SIZE_LARGE)	//ppl with fat bodytype
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 60, TRUE)
-				hit_mob.Knockdown(1 SECONDS)
-			if(MOB_SIZE_SMALL)	//small animals
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 40, TRUE)
-				hit_mob.Knockdown(1 SECONDS)
-			else				//everything else
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 50, TRUE)
-				hit_mob.Knockdown(1 SECONDS)
-	else
-		playsound(src, 'code/modules/wod13/sounds/bump.ogg', 75, TRUE)
-
-	if(driver && istype(A, /mob/living/carbon/human/npc))
-		var/mob/living/carbon/human/npc/NPC = A
-		NPC.Aggro(driver, TRUE)
-
-	for(var/mob/living/L in src)
-		if(L)
-			if(L.client)
-				L.client.pixel_x = 0
-				L.client.pixel_y = 0
-	if(istype(A, /mob/living))
-		var/dam = 30
-		var/mob/living/L = A
-		if(!HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
-			L.apply_damage(dam, BRUTE, BODY_ZONE_CHEST)
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-		get_damage(dam)
-	else
-		var/dam = 30
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-			driver.apply_damage(dam, BRUTE, BODY_ZONE_CHEST)
-		get_damage(dam)
-	return
-
-
-//Motorcycle explodes!
-/obj/vehicle/ridden/motorcycle/proc/get_damage(cost)
-	if(cost > 0)
-		health = max(0, health-cost)
-	if(cost < 0)
-		health = min(maxhealth, health-cost)
-	if(health == 0)
-		on = FALSE
-		color = "#919191"
-		if(!exploded && prob(10))
-			exploded = TRUE
-			for(var/mob/living/L in src)
-				L.forceMove(loc)
-				to_chat(L, span_warning("You are thrown from the wrecked [src]! "))
-			explosion(loc,0,1,3,4)
-			GLOB.car_list -= src
-	else if(prob(50) && health <= maxhealth/2)
-		on = FALSE
-	return
-
-
-/obj/vehicle/ridden/motorcycle/examine(mob/user)
-	. = ..()
-	if(user.loc == src)
-		. += "<b>Gas</b>: [gas]/1000"
-	if(health < maxhealth && health >= maxhealth-(maxhealth/4))
-		. += "It's slightly dented..."
-	if(health < maxhealth-(maxhealth/4) && health >= maxhealth/2)
-		. += "It has some pretty major dents..."
-	if(health < maxhealth/2 && health >= maxhealth/4)
-		. += "It's heavily damaged..."
-	if(health < maxhealth/4)
-		. += span_warning("It appears to be falling apart... ")
-	if(locked)
-		. += span_warning("It's wheel is locked. ")
-	if(driver)
-		. += span_notice("You see the following people on the motorcycle: ")
-		. += span_notice(" [driver] ")
-*/
