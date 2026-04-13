@@ -44,6 +44,10 @@
 	desc = "A motorcycle; a beautiful and dangerous deathtrap on two wheels. Not meant for faint of heart or cowardly."
 	icon_state = "motorcycle_basic"
 	icon = 'modular_tfn/modules/motorcycle/icons/obj/motorcycle.dmi'
+	//centers the icon and animation.
+		//centers the bike sprite on the tile.
+	base_pixel_x = -16
+	base_pixel_y = 4
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	density = TRUE
@@ -52,8 +56,6 @@
 
 	MAP_SWITCH(pixel_x = 0, pixel_x = 0)
 	MAP_SWITCH(pixel_y = 0, pixel_y = 0)
-
-	//glide?
 	glide_size = 96
 
 	//light, keeping it.
@@ -136,8 +138,8 @@
 	last_pos["y"] = y
 	movement_vector = dir2angle(dir)
 	//centers the bike sprite on the tile.
-	pixel_x = -20
-	pixel_y = 8
+	pixel_x = base_pixel_x
+	pixel_y = base_pixel_y
 
 /obj/motorcycle/Destroy()
 	STOP_PROCESSING(SScarpool, src)
@@ -555,8 +557,8 @@
 
 	forceMove(locate(last_pos["x"], last_pos["y"], z))
 
-	pixel_x = last_pos["x_pix"]
-	pixel_y = last_pos["y_pix"]
+	pixel_x = base_pixel_x + last_pos["x_pix"]
+	pixel_y = base_pixel_y + last_pos["y_pix"]
 	var/moved_x = round(sin(used_vector)*used_speed)
 	var/moved_y = round(cos(used_vector)*used_speed)
 	if(used_speed != 0)
@@ -614,7 +616,7 @@
 
 	move_car_riders(moved_x, moved_y)
 
-	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
+	animate(src, pixel_x = base_pixel_x + last_pos["x_pix"]+moved_x, pixel_y = base_pixel_y + last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
 	update_last_pos(moved_x, moved_y)
 
 //Neat.
@@ -757,7 +759,6 @@
 			return SOUTH
 		if(225.6 to 315.5)
 			return WEST
-
 //Fine
 /obj/motorcycle/proc/start_engine()
 	if(on)
