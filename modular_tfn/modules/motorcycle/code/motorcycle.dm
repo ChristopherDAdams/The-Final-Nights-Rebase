@@ -82,10 +82,8 @@
 	var/mob/living/driver
 	var/list/passengers = list()
 	var/max_passengers = 1
-	//Needs fixing to only unbuckle when the motorcycle action is pressed, or in a crash, etc.
-	//used to stop movement controls and keep the character "live" instead of an uninteractable sprite
-	can_buckle = TRUE
-
+	var/image/driver_overlay
+	var/image/passenger_overlay
 	var/speed = 1	//Future
 	var/stage = 1
 
@@ -153,11 +151,11 @@
 	var/list/radial_menu_options = list(
 		"Open Trunk" = icon('modular_darkpack/modules/cars/icons/car_actions.dmi', "baggage"),
 	)
-	var/list/passanger_map = list()
+	var/list/passenger_map = list()
 	for(var/mob/living/guy in (passengers + driver))
 		var/guy_name = guy.name
 		radial_menu_options[guy_name] = image(icon = guy, icon_state = guy)
-		passanger_map[guy_name] = guy
+		passenger_map[guy_name] = guy
 
 	var/pick = show_radial_menu(user, src, radial_menu_options, require_near = TRUE)
 	if(!pick)
@@ -170,7 +168,7 @@
 	if(locked)
 		to_chat(user, span_warning("[src] is locked!"))
 		return CLICK_ACTION_BLOCKING
-	var/mob/living/occupent = passanger_map[pick]
+	var/mob/living/occupent = passenger_map[pick]
 	if(!occupent)
 		return CLICK_ACTION_BLOCKING
 
@@ -390,7 +388,7 @@
 	if(!driver)
 		radial_menu_options["Driver Seat"] = icon('modular_darkpack/modules/cars/icons/car_actions.dmi', "driver")
 	if(passengers.len < max_passengers)
-		radial_menu_options["Passanger Seat"] = icon('modular_darkpack/modules/cars/icons/car_actions.dmi', "passanger")
+		radial_menu_options["Passenger Seat"] = icon('modular_darkpack/modules/cars/icons/car_actions.dmi', "passenger")
 	var/pick = show_radial_menu(user, src, radial_menu_options, require_near = TRUE)
 	if(!pick)
 		return
@@ -400,7 +398,7 @@
 	if(do_after(user, 1 SECONDS, dropped, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		if(pick == "Driver Seat" && driver_enter(dropped))
 			return
-		else if(pick == "Passanger Seat" && passenger_enter(dropped))
+		else if(pick == "Passenger Seat" && passenger_enter(dropped))
 			return
 	to_chat(dropped, span_warning("You fail to enter [src]."))
 	return
@@ -410,6 +408,10 @@
 	if(driver)
 		return
 	driver = user
+	driver_overlay = image(icon = driver.icon, icon_state = driver.icon_state, dir = src.dir)
+	driver_overlay.appearance = driver.appearance
+	add_overlay(driver_overlay)
+
 	for(var/car_action in subtypesof(/datum/action/motorcycle))
 		var/datum/action/motorcycle/new_action = new car_action()
 		new_action.Grant(user)
@@ -420,17 +422,17 @@
 	if(passengers.len >= max_passengers)
 		return
 	passengers += user
+	passenger_overlay = image(icon = user.icon, icon_state = user.icon_state, dir = src.dir)
+	passenger_overlay.appearance = user.appearance
+	add_overlay(passenger_overlay)
 	var/datum/action/motorcycle/exit_car/E = new()
 	E.Grant(user)
 	enter_car(user)
 	return TRUE
 
-// Please only call via driver_enter or passanger_enter
+// Please only call via driver_enter or passenger_enter
 /obj/motorcycle/proc/enter_car(mob/living/user)
-	user.forceMove(loc)
-	if (!buckle_mob(user))
-		to_chat(user, span_warning("You fail to mount the [src]."))
-		return
+	user.forceMove(src)
 	visible_message(span_notice("[user] mounts the [src]."), \
 		span_notice("You mounted the [src]."))
 	playsound(src, 'modular_darkpack/master_files/sounds/effects/door/door.ogg', 50, TRUE)
@@ -445,12 +447,15 @@
 //Dump one guy out of the car.
 /obj/motorcycle/proc/empty_occupent(mob/living/dumpe)
 	if(driver == dumpe)
+		cut_overlay(driver_overlay)
+		driver_overlay = null
 		driver = null
 	if(dumpe in passengers)
+		cut_overlay(passenger_overlay)
+		passenger_overlay = null
 		passengers -= dumpe
 	dumpe.forceMove(loc)
-	unbuckle_mob(dumpe)
-
+	src.overlays -= /mob/living
 	var/list/exit_side = list(
 		SIMPLIFY_DEGREES(movement_vector + 90),
 		SIMPLIFY_DEGREES(movement_vector - 90)
@@ -644,17 +649,9 @@
 
 //This controls the directional offset.
 /obj/motorcycle/proc/move_car_riders(moved_x, moved_y)
-	//this is the base sprite translations, minus the camera effect.
+	//Simple
 	if(driver)
-		driver.pixel_x = last_pos["x_pix"]
-		driver.pixel_y = last_pos["y_pix"]
 		driver.dir = src.dir
-		if(driver.loc != src.loc)
-			driver.loc = src.loc
-		animate(driver, \
-			pixel_x = last_pos["x_pix"] + moved_x, \
-			pixel_y = last_pos["y_pix"] + moved_y, \
-			SScarpool.wait, 1)
 
 /obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
