@@ -60,6 +60,11 @@
 /obj/darkpack_car/limousine/camarilla
 	access = LOCKACCESS_CAMARILLA
 
+// TFN EDIT START - Crown Blue Jazz Club OverHaul
+/obj/darkpack_car/limousine/ventrue
+	access = LOCKACCESS_VENTRUE
+// TFN EDIT END - Crown Blue Jazz Club OverHaul
+
 /obj/darkpack_car/limousine/voivodate
 	access = "seer_voivodate"
 
