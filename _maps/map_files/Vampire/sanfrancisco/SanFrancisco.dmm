@@ -6852,12 +6852,6 @@
 /obj/effect/turf_decal/bordur/corner{
 	dir = 1
 	},
-/obj/structure/lamppost/sidewalk,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/bordur{
 	dir = 1
 	},
@@ -7233,13 +7227,6 @@
 /obj/effect/mapping_helpers/door/lock_difficulty/eight,
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior/endron_facility)
-"bPH" = (
-/obj/effect/turf_decal/bordur{
-	dir = 4
-	},
-/obj/structure/lamppost/sidewalk,
-/turf/open/floor/plating/sidewalk/old,
-/area/vtm/outside/financialdistrict)
 "bPK" = (
 /obj/effect/decal/rugs,
 /obj/effect/mapping_helpers/door/lock_difficulty/two,
@@ -12442,11 +12429,6 @@
 "dik" = (
 /turf/closed/wall/vampwall/rustbad,
 /area/vtm/interior/ghetto)
-"diq" = (
-/obj/effect/turf_decal/bordur,
-/obj/structure/lamppost/sidewalk,
-/turf/open/floor/plating/sidewalk/old,
-/area/vtm/outside/financialdistrict)
 "dit" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/bonfire/prelit,
@@ -20655,11 +20637,6 @@
 "fnZ" = (
 /obj/effect/turf_decal/bordur{
 	dir = 4
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/effect/turf_decal/bordur{
 	dir = 4
@@ -40338,7 +40315,9 @@
 /obj/effect/turf_decal/bordur/corner{
 	dir = 8
 	},
-/obj/structure/lamppost/sidewalk,
+/obj/structure/lamppost/sidewalk{
+	pixel_y = 14
+	},
 /turf/open/floor/plating/sidewalk/old,
 /area/vtm/outside/financialdistrict)
 "kqS" = (
@@ -74758,11 +74737,6 @@
 /area/vtm/interior/bianchiBank)
 "tdA" = (
 /obj/effect/turf_decal/bordur,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/bordur,
 /obj/structure/lamppost/sidewalk{
 	pixel_y = -6
@@ -172212,7 +172186,7 @@ ucp
 ucp
 ucp
 lEF
-diq
+jBa
 jcZ
 jcZ
 uTa
@@ -173627,14 +173601,14 @@ dUU
 dUU
 dUU
 iIp
-bPH
+uNv
 eed
 dUU
 dUU
 fnZ
 dUU
 dUU
-bPH
+uNv
 dUU
 dUU
 dUU
