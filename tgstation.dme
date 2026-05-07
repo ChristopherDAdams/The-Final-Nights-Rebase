@@ -7966,7 +7966,6 @@
 #include "modular_tfn\modules\motorcycle\code\motorcycle.dm"
 #include "modular_tfn\modules\motorcycle\code\motorcycle_actions.dm"
 #include "modular_tfn\modules\motorcycle\code\motorcycle_subtypes.dm"
-#include "modular_tfn\modules\motorcycle\code\datums\components\riding\riding_vehicle.dm"
 #include "modular_tfn\modules\npc\code\shipment_npcs.dm"
 #include "modular_tfn\modules\overwatch\code\overwatch.dm"
 #include "modular_tfn\modules\phones\code\endpost_announce.dm"
