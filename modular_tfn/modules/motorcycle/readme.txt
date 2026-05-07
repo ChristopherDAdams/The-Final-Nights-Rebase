@@ -1,21 +1,18 @@
-Motorcycles For TFN
+Motorcycles! By ChristopherDAdams/MichaelEUkari
 
 Module ID:
 motorcycle
 
 Description:
-This creates motorcycles for TFN, by blending vamp cars for logic, and TG speedbike code for display and ridden vehicles.
+This creates motorcycles, originally for TFN, but may be ported to upstream, and other servers, as long as credit is given.
+This blends uses darkpack cars logic and modifies it to work for the motorcycle.
 
 TG Proc/File Changes:
-Overrides slightly; /mob/living/carbon/human/MouseDrop(atom/over_object)
-Adds if(istype(over_object, /obj/vehicle/ridden/motorcycle) && get_dist(src, over_object) < 2) logic to MouseDrops.
-
+N/A
 Modular Overrides:
 N/A
-
 Defines:
 N/A
-
 Included files that are not contained in this module:
 N/A
 
