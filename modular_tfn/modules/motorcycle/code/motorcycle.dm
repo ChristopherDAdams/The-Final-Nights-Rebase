@@ -2,13 +2,14 @@
 #define MOTORCYCLE_TANK_MAX 1000
 
 //Motorcycle Convert
-//Fourth Pass.
+//Fifth Pass
 
+//Debugging
 /obj/effect/temp_visual/telegraphing/car
 	icon_state = "target_circle"
 	duration = 0.5 SECONDS
 
-//Sound. Might add more after basics are in.
+//Sound. Might add the others after basic visuals are in.
 /datum/looping_sound/motorcycle_engine
 	start_sound = 'modular_tfn/modules/motorcycle/sound/bike_idle_start.ogg'
 	start_length = 2 SECONDS
@@ -24,7 +25,8 @@
 'modular_tfn/modules/motorcycle/sound/bike_idle_run.ogg'
 */
 
-//Still needs tweaking.
+//Storage
+//Still needs balancing.
 /obj/motorcycle_saddlebags
 	name = "motorcycle saddlebags"
 	desc = "How did this get out."
@@ -44,8 +46,6 @@
 	desc = "A motorcycle; a beautiful and dangerous deathtrap on two wheels. Not meant for faint of heart or cowardly."
 	icon_state = "motorcycle_basic"
 	icon = 'modular_tfn/modules/motorcycle/icons/obj/motorcycle.dmi'
-	//centers the icon and animation.
-		//centers the bike sprite on the tile.
 	base_pixel_x = -16
 	base_pixel_y = 4
 	anchored = TRUE
@@ -105,16 +105,14 @@
 	var/gas = MOTORCYCLE_TANK_MAX
 
 	/// If we provide extra debug information like path indicators
-	//neat. Don't need it. (Needed it.)
-	var/debug_car = TRUE
+	var/debug_car = FALSE
 
-	//access now handled in motorcycle_subtypes
+	//access handled in motorcycle_subtypes
 	var/grant_car_keys = FALSE
 
 	/// sound loop for the engine
 	var/datum/looping_sound/car_engine/engine_sound_loop
 
-	//cooldowns
 	COOLDOWN_DECLARE(impact_delay)
 	COOLDOWN_DECLARE(beep_cooldown)
 
@@ -139,11 +137,14 @@
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
 
+	add_overlay(image(icon = src.icon, icon_state = src.icon_state, pixel_x = -32, pixel_y = -32))
+	icon_state = "empty"
+
 /obj/motorcycle/Destroy()
 	STOP_PROCESSING(SScarpool, src)
+	empty_bike()
 	QDEL_NULL(engine_sound_loop)
 	QDEL_NULL(trunk)
-	empty_car()
 	. = ..()
 
 //Alternate actions.
@@ -346,7 +347,7 @@
 	if(broken)
 		if(!exploded && prob(50))
 			exploded = TRUE
-			empty_car()
+			empty_bike()
 			explosion(loc,0,1,3,4)
 
 //Break
@@ -372,7 +373,6 @@
 
 //Convert
 /obj/motorcycle/mouse_drop_receive(mob/living/dropped, mob/user, params)
-	. = ..()
 	if(!isliving(dropped))
 		return
 
@@ -393,17 +393,18 @@
 	if(!pick)
 		return
 
-	visible_message(span_notice("[dropped] begins entering [src]..."), \
+	visible_message(span_notice("[dropped] begins mounting [src]..."), \
 		span_notice("You begin mounting [src]..."))
 	if(do_after(user, 1 SECONDS, dropped, interaction_key = DOAFTER_SOURCE_MOTORCYCLE))
 		if(pick == "Driver Seat" && driver_enter(dropped))
 			return
 		else if(pick == "Passenger Seat" && passenger_enter(dropped))
 			return
-	to_chat(dropped, span_warning("You fail to enter [src]."))
+	//maybe limited to Driving stat, and certainly only to humans.
+	to_chat(dropped, span_warning("You fail to understand the [src]."))
 	return
 
-//Enter
+//Driver Enter
 /obj/motorcycle/proc/driver_enter(mob/living/user)
 	if(driver)
 		return
@@ -412,12 +413,17 @@
 	driver_overlay.appearance = driver.appearance
 	add_overlay(driver_overlay)
 
+	if(!enter_bike(user))
+		driver = null
+		return FALSE
+
 	for(var/car_action in subtypesof(/datum/action/motorcycle))
 		var/datum/action/motorcycle/new_action = new car_action()
 		new_action.Grant(user)
-	enter_car(user)
+
 	return TRUE
-//Passenger
+
+//Passenger Enter
 /obj/motorcycle/proc/passenger_enter(mob/living/user)
 	if(passengers.len >= max_passengers)
 		return
@@ -427,21 +433,22 @@
 	add_overlay(passenger_overlay)
 	var/datum/action/motorcycle/exit_car/E = new()
 	E.Grant(user)
-	enter_car(user)
 	return TRUE
 
 // Please only call via driver_enter or passenger_enter
-/obj/motorcycle/proc/enter_car(mob/living/user)
+/obj/motorcycle/proc/enter_bike(mob/living/user)
 	user.forceMove(src)
+	user.setDir(src.dir)
 	visible_message(span_notice("[user] mounts the [src]."), \
 		span_notice("You mounted the [src]."))
 	playsound(src, 'modular_darkpack/master_files/sounds/effects/door/door.ogg', 50, TRUE)
+	return TRUE
 
 //Dump out all living from the car
-/obj/motorcycle/proc/empty_car()
+/obj/motorcycle/proc/empty_bike()
 	if(driver)
 		empty_occupent(driver)
-	for(var/mob/living/L in passengers)
+	for(var/mob/living/L in passengers.Copy())
 		empty_occupent(L)
 
 //Dump one guy out of the car.
@@ -544,9 +551,10 @@
 	last_pos["y"] = y
 
 /obj/motorcycle/process(seconds_per_tick)
-	car_move()
+	bike_move()
 
-/obj/motorcycle/proc/car_move()
+
+/obj/motorcycle/proc/bike_move()
 	speed_in_pixels = max(speed_in_pixels, -64)
 	var/used_vector = movement_vector
 	var/used_speed = speed_in_pixels
@@ -649,9 +657,18 @@
 
 //This controls the directional offset.
 /obj/motorcycle/proc/move_car_riders(moved_x, moved_y)
-	//Simple
+	//Simple turning.
 	if(driver)
 		driver.dir = src.dir
+	//darkpack car's "Camera Control"
+	for(var/mob/living/rider in src)
+		if(rider.client)
+			rider.client.pixel_x = last_pos["x_frwd"]
+			rider.client.pixel_y = last_pos["y_frwd"]
+			animate(rider.client, \
+				pixel_x = last_pos["x_pix"] + moved_x * 2, \
+				pixel_y = last_pos["y_pix"] + moved_y * 2, \
+				SScarpool.wait, 1)
 
 /obj/motorcycle/proc/update_last_pos(moved_x, moved_y)
 	// Step 1: Move pixel and forward positions
@@ -744,7 +761,7 @@
 	M.Turn(movement_vector - minus_angle)
 	transform = M
 
-//(jurryrigged fix) ripped from type2type.dm, for above. Can i access above this somehow without this proc?
+//ripped from type2type.dm, for above. Made more sense to me.
 /obj/motorcycle/proc/angle2dir_cardinal(degree)
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(round(degree, 0.1))
